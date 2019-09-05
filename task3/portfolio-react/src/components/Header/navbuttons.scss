@@ -1,0 +1,36 @@
+@import "../../variables";
+
+.nav-buttons-row {
+  display: flex;
+}
+
+.nav-button {
+  font-family: $lato-family;
+  padding: 0.25rem 0.4rem;
+  font-size: 1em;
+  background: $dark-bg-color;
+  color: $mint-2;
+  border: 1.5px solid transparent;
+  border-radius: 5px;
+  margin-right: 3rem;
+
+  &:hover {
+    // opacity: 0.8;
+    cursor: pointer;
+    border: 1.5px solid $white;
+    // box-shadow: 2px 2px $mint-2;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .nav-buttons-row {
+    width: 100%;
+    justify-content: center;
+    margin-top: 2rem;
+
+    .nav-button {
+      margin-right: 1.5rem;
+      margin-left: 1.5rem;
+    }
+  }
+}

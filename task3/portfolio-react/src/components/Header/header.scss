@@ -1,0 +1,74 @@
+@import "../../variables";
+
+.header {
+  padding: 1.75rem 0 1rem 0;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 1.25rem;
+}
+
+.header {
+  .brand {
+    margin-right: auto;
+  }
+}
+
+#logo {
+  width: 25rem;
+  margin-left: 3rem;
+
+  path {
+    stroke: $white;
+  }
+}
+
+
+@media screen and (max-width: 1000px) {
+  .header {
+    .brand {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 762px) {
+  .header {
+    font-size: 1rem;
+  }
+}
+
+
+@mixin pathAnimation($childnum, $dasharrayoffset, $animation) {
+  #logo path {
+    &:nth-child(#{$childnum}) {
+      stroke-dasharray: $dasharrayoffset;
+      stroke-dashoffset: $dasharrayoffset;
+      animation: $animation;
+    }
+  }
+
+}
+
+@include pathAnimation(1, 178.17611694335938, line-anim 4s ease forwards 3);
+@include pathAnimation(2, 163.43067932128906, line-anim 4s ease forwards 3);
+@include pathAnimation(3, 183.02191162109375, line-anim 4s ease forwards 3);
+@include pathAnimation(4, 164.63787841796875, line-anim 4s ease forwards 3);
+@include pathAnimation(5, 178.17601013183594, line-anim 4s ease forwards 3);
+@include pathAnimation(6, 163.43067932128906, line-anim 4s ease forwards 3);
+@include pathAnimation(7, 147.22811889648438, line-anim 4s ease forwards 3);
+@include pathAnimation(8, 163.4306640625, line-anim 4s ease forwards 3);
+@include pathAnimation(9, 183.0225372314453, line-anim 4s ease forwards 3);
+@include pathAnimation(10, 190.52598571777344, line-anim 4s ease forwards 3);
+@include pathAnimation(11, 178.17601013183594, line-anim 4s ease forwards 3);
+@include pathAnimation(12, 163.4307403564453, line-anim 4s ease forwards 3);
+@include pathAnimation(13, 201.49435424804688, line-anim 4s ease forwards 3);
+
+
+@keyframes line-anim {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
