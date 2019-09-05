@@ -1,0 +1,103 @@
+@import "../../variables";
+
+.projects-container {
+  font-size: 1rem;
+  font-family: $poppins-family;
+  background: $white;
+  padding: 1rem 3rem 2rem 3rem;
+
+  h1 {
+    font-size: 1.5em;
+    text-align: center;
+    margin: 0 0 0.7em 0;
+    text-decoration: underline;
+  }
+}
+
+.projects-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@mixin side-heading($content) {
+  &::before {
+    font-family: $exo-family;
+    font-weight: 700;
+    font-style: italic;
+    content: $content;
+  }
+}
+
+.list-item {
+  margin-right: 0.7em;
+  padding: 0.5em;
+  border-radius: 9px;
+  border: 2px solid $mint-4;
+  max-width: 30em;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 2px 2px 3px $mint-4;
+
+  &::before {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    box-shadow: 10px 10px 12px 3px $mint-4;
+    opacity: 0;
+    transition: opacity 500ms;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+
+  div {
+    padding: 0.7em;
+    word-break: break-word;
+  }
+
+  .type {
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .company-name {
+    @include side-heading("Organization: ");
+  }
+
+  .duration {
+    @include side-heading("Duration: ");
+  }
+
+  .role {
+    @include side-heading("Role: ");
+  }
+
+  .inst-name {
+    @include side-heading("Institute: ");
+  }
+
+  .cgpa {
+    @include side-heading("CGPA: ");
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .projects-list {
+    flex-wrap: wrap;
+  }
+
+  .list-item {
+    margin-right: 0;
+    margin-bottom: 1em;
+
+    div {
+      word-break: break-word;
+    }
+  }
+
+}

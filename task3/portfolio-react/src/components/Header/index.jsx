@@ -5,8 +5,8 @@ import './header.scss';
 export default class Header extends Component {
 	render() {
 		return (
-			<header class="header">
-				<div class="brand">
+			<header className="header">
+				<div className="brand">
 					<svg
 						id="logo"
 						width="582"

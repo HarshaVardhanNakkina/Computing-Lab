@@ -13,11 +13,13 @@
   border: 1.5px solid transparent;
   border-radius: 5px;
   margin-right: 3rem;
+  // transition: border 400ms;
 
   &:hover {
     // opacity: 0.8;
     cursor: pointer;
     border: 1.5px solid $white;
+    transition: border 400ms;
     // box-shadow: 2px 2px $mint-2;
   }
 }

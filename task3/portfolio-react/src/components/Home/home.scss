@@ -1,5 +1,10 @@
 @import '../../variables';
 
+.main-content {
+  background: url(https://images.unsplash.com/photo-1484417894907-623942c8ee29?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80);
+  padding: 5rem 0 3rem 3rem;
+}
+
 %introbg {
   background: $dark-bg-color;
   width: max-content;
@@ -9,7 +14,6 @@
 
 
 .intro {
-  margin: 5rem 0 0 3rem;
   font-family: "Poppins", sans-serif;
   color: $mint-1;
   font-size: 3.5em;
@@ -40,7 +44,7 @@
 
 @media screen and (max-width: 1000px) {
   .intro {
-    margin: 0.3rem 0 0 3rem;
+    // margin: 0.3rem 0 0 3rem;
     width: 25rem;
   }
 }

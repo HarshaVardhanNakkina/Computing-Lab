@@ -5,13 +5,13 @@ import "./footer.scss";
 export default class Footer extends Component {
 	render() {
 		return (
-			<footer class="footer">
-				<div class="title">Contact / Follow me</div>
-				<ul class="contact-list">
-					<li>twitter</li>
-					<li>medium</li>
-					<li>github</li>
-					<li>gmail</li>
+			<footer className="footer">
+				<div className="title">Contact / Follow me</div>
+				<ul className="contact-list">
+					<li className="twitter-link"><a href="http://">twitter</a></li>
+					<li className="medium-link"><a href="http://">medium</a></li>
+					<li className="github-link"><a href="http://">github</a></li>
+					<li className="email">gmail</li>
 				</ul>
 			</footer>
 		)

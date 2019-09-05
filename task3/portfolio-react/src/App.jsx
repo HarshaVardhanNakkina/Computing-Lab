@@ -2,8 +2,9 @@ import React, { Component } from "react";
 // import "./App.scss";
 import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Header from "./components/Header";
-import Home from "./components/Home"
-import Footer from "./components/Footer"
+import Home from "./components/Home";
+import Footer from "./components/Footer";
+import ExpAndProjects from "./components/Projects";
 
 export default class App extends Component {
 	render() {
@@ -13,6 +14,7 @@ export default class App extends Component {
 				<Switch>
 					<Route path="/" exact component={Home} />
 					<Route path="/home" component={Home} />
+					<Route path="/exp" component={ExpAndProjects} />
 				</Switch>
 				<Footer />
 			</Router>
@@ -20,7 +22,7 @@ export default class App extends Component {
 	}
 }
 
-// 		/*
+		// 		/*
 
 // 			<React.Fragment>
 // 					{/* <Header /> */}

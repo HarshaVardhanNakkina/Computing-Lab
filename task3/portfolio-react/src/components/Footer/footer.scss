@@ -5,7 +5,7 @@
   font-size: 1.5rem;
   color: $white;
   background: $dark-bg-color;
-  margin-top: 3rem;
+  // margin-top: 3rem;
   margin-bottom: 0rem;
   padding: 1rem 3rem 3rem 3rem;
 }
@@ -13,6 +13,13 @@
 .title {
   font-size: 1em;
   text-align: center;
+}
+
+@mixin bg-image-icon ($url) {
+  background-image: url(#{$url});
+  background-repeat: no-repeat;
+  background-size: 1.7em;
+  background-position: 0.5em;
 }
 
 .contact-list {
@@ -28,5 +35,22 @@
   li {
     padding: 0.5rem;
     width: max-content;
+		padding: 0.5rem 0.5rem 0.5rem 2rem;
+		a {
+			text-decoration: none;
+			color: inherit;
+		}
+  }
+
+  .twitter-link {
+    @include bg-image-icon('../../assets/twitter-blue-32px.png');
+  }
+
+  .medium-link {
+    @include bg-image-icon('../../assets/medium-32px.png');
+  }
+
+  .github-link {
+    @include bg-image-icon('../../assets/gitub-light-32px.png');
   }
 }
