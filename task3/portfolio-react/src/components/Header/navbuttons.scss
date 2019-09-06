@@ -30,10 +30,14 @@
     justify-content: center;
     margin-top: 2rem;
     flex-wrap: wrap;
+  }
+}
 
-    // .nav-button {
-    //   margin-right: 1.5rem;
-    //   margin-left: 1.5rem;
-    // }
+@media screen and (max-width: 415px) {
+  .nav-buttons-row {
+    flex-direction: column;
+  }
+  .nav-button {
+    margin: 0;
   }
 }
