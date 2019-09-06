@@ -19,7 +19,7 @@
     // opacity: 0.8;
     cursor: pointer;
     border: 1.5px solid $white;
-    transition: border 400ms;
+    transition: border 500ms;
     // box-shadow: 2px 2px $mint-2;
   }
 }
@@ -29,10 +29,11 @@
     width: 100%;
     justify-content: center;
     margin-top: 2rem;
+    flex-wrap: wrap;
 
-    .nav-button {
-      margin-right: 1.5rem;
-      margin-left: 1.5rem;
-    }
+    // .nav-button {
+    //   margin-right: 1.5rem;
+    //   margin-left: 1.5rem;
+    // }
   }
 }

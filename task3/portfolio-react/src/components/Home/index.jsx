@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import "./home.scss";
+import background from "../../assets/main-content-bg.png"
 export default class Home extends Component {
 	render() {
 		return (
