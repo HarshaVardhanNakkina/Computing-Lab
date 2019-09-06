@@ -4,7 +4,7 @@
   font-size: 1rem;
   font-family: $poppins-family;
   background: $white;
-  padding: 1rem 3rem 2rem 3rem;
+  padding: 1rem 1rem 2rem 1rem;
 
   h1 {
     font-size: 1.5em;
@@ -87,6 +87,11 @@
 }
 
 @media screen and (max-width: 1000px) {
+
+  // .projects-container {
+  //   padding: 1rem 1rem 2rem 1rem;
+  // }
+
   .projects-list {
     flex-wrap: wrap;
   }
