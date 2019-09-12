@@ -22,7 +22,7 @@ export default class Education extends Component {
 						<div className="type">B.Tech</div>
 						<div className="inst-name">Rajiv Gandhi University of Knowledge Technologies</div>
 						<div className="duration">2014 - 2018</div>
-						<div className="cgpa"> 8..14 / 10</div>
+						<div className="cgpa"> 8.14 / 10</div>
 					</div>
 					{/* <div className="list-item">
 						<div className="type">Internship</div>

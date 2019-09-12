@@ -5,7 +5,7 @@ import "./footer.scss";
 export default class Footer extends Component {
 	render() {
 		return (
-			<footer className="footer">
+			<footer className="footer" id="contact">
 				<div className="title">Contact / Follow me</div>
 				<ul className="contact-list">
           <li className="twitter-link"><a href="https://twitter.com/Ganeshh___" target="_blank">twitter</a></li>
