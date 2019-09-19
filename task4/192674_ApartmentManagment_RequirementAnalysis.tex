@@ -1,0 +1,105 @@
+\documentclass[a4paper, 10pt, conference]{ieeeconf}      
+
+\overrideIEEEmargins
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+
+\title{\LARGE \bf
+Feasibility and Requirement Analysis
+}
+
+\author{NGS HarshaVardhan\\192IS016}
+
+
+\begin{document}
+
+
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+\section{INTRODUCTION}
+
+This project deals with apartment management. It includes managing the apartments, management of ownership of apartments, tracking the complaints. It has features for filing a complaint online, tracking the status of a complaint. It will have a user interface as well as admin interface so that the admin can view all the details about the apartments, give privileges to users. In simple terms Admin has all the rights to the resources of the application.
+
+\section{POSSIBLE SOLUTIONS}
+
+\begin{enumerate}
+    \item This project can be implemented as a web application, so that it will be accessible easily through a browser.
+    
+    \item This project can be implemented as an mobile application, because of the given situation of increased use of hand-held devices.
+
+\end{enumerate}
+
+\section{EVALUATION CRITERIA}
+The possible solutions might go through the following evaluation criteria
+
+\begin{enumerate}
+    \item Requirements analysis
+    \item Visual design specifications
+    \item Technical design specifications
+    \item Coding, Documentation, Testing
+    \item Launch
+\end{enumerate}
+
+\section{PROPOSED SOLUTION}
+After analyzing the possible solutions, developing a web application seems to be a good idea because
+
+\begin{itemize}
+    \item Readily accessible for anyone with a browser
+    \item No need to maintain separate code bases for different platforms
+    \item No need to learn platform specific technologies
+    \item Ease of maintenance with single code base
+\end{itemize}
+
+
+\addtolength{\textheight}{-12cm}
+
+
+\section*{REQUIREMENT ANALYSIS}
+
+\subsection{FUNCTIONALITY}
+
+\begin{itemize}
+    \item Two interfaces for admin and normal user
+    \item Users should be able to register/login with their door number, email or mobile
+    \item Users should be able to create a complaint online which will be automatically sent the concerned entity (might be a person, organization etc...)
+    \item Users should be able to track the status of their complaints.
+    \item Admin should have all the privileges on the resources
+\end{itemize}
+
+\subsection{NON-FUNCTIONAL}
+
+\begin{itemize}
+    \item \textbf{Maintainability}: We can divide our code modules or we can use micro-service architecture. Preparing tests for each of the modules will ensure the maintainability of the application.
+    \item \textbf{Scalability}: As the user base increases we need our application to be scalable. We might want to choose a programming language, data base that can scale with our application.
+    \item \textbf{Security}: We need our application logic and resources to be as secure as possible. Using OAuth, HTTPS for secure requests and responses is important.
+    \item \textbf{Portability}: As application is web based it is portable. It can be accessed through a browser.
+\end{itemize}
+
+\subsection{PLATFORM}
+The project will be a web application. It needs a web server of our choice, for hosting the front-end part (HTML, CSS, JavaScript), back-end part.
+
+\subsection{DEVELOPMENT}
+
+\begin{itemize}
+
+	\item \textbf{Express} for server side.
+	\item \textbf{EJS} (Embedded JavaScript) templates, CSS, SCSS or bootstrap for front-end.
+	\item \textbf{MongoDB} as a database.
+	\item \textbf{Apache Tomcat} as web server.
+	\item \textbf{Nodejs} as our platform.
+	\item \textbf{NPM} which comes with nodejs as a package manager.
+	\item \textbf{Git} for version control.
+	\item \textbf{OAuth} for securing the API.
+
+\end{itemize}
+
+
+
+
+\end{document}
