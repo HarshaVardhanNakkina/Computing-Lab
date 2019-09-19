@@ -11,12 +11,14 @@
 	"dependencies": {
 		"react": "^16.9.0",
 		"react-dom": "^16.9.0",
-		"react-router-dom": "^5.0.1"
+		"react-router-dom": "^5.0.1",
+		"react-scroll": "^1.7.14"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.5.5",
 		"@babel/preset-env": "^7.5.5",
 		"@babel/preset-react": "^7.0.0",
+		"autoprefixer": "^9.6.1",
 		"babel-loader": "^8.0.6",
 		"css-loader": "^3.2.0",
 		"file-loader": "^4.2.0",
@@ -24,10 +26,19 @@
 		"html-webpack-plugin": "^3.2.0",
 		"mini-css-extract-plugin": "^0.8.0",
 		"node-sass": "^4.12.0",
+		"postcss-loader": "^3.0.0",
 		"react-hot-loader": "^4.12.12",
 		"sass-loader": "^8.0.0",
 		"webpack": "^4.39.3",
 		"webpack-cli": "^3.3.7",
 		"webpack-dev-server": "^3.8.0"
-	}
+	},
+	"browserslist": [
+		"defaults",
+		"not ie < 11",
+		"last 2 versions",
+		"> 1%",
+		"iOS 7",
+		"last 3 iOS versions"
+	]
 }

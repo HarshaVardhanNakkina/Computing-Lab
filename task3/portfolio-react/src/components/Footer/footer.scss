@@ -25,17 +25,18 @@
 .contact-list {
   font-size: 0.5em;
   margin: 0;
-  margin-top: 1rem;
+  margin-top: 2rem;
   list-style: none;
   display: flex;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
   text-transform: capitalize;
+  flex-wrap: wrap;
+  padding: 0;
 
   li {
-    padding: 0.5rem;
     width: max-content;
-		padding: 0.5rem 0.5rem 0.5rem 2rem;
+    padding: 0.5rem 2rem 0.5rem 2rem;
 		a {
 			text-decoration: none;
 			color: inherit;
@@ -52,5 +53,17 @@
 
   .github-link {
     @include bg-image-icon('../../assets/gitub-light-32px.png');
+  }
+
+  .email-link {
+    @include bg-image-icon('../../assets/gmail-32px.png');
+  }
+}
+
+@media screen  and (max-width: 800px) {
+  .contact-list {
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-around;
   }
 }

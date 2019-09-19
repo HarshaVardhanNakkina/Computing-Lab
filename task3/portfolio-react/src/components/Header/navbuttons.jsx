@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import "./navbuttons.scss"
 import { Link } from "react-router-dom";
+import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 
 export default class NavButtons extends Component {
 	render() {
@@ -12,7 +13,13 @@ export default class NavButtons extends Component {
 				<Link className="nav-button" to="/exp">
 					experience/projects
 				</Link>
-				<div className="nav-button">contact</div>
+				{/* <div className="nav-button">contact</div> */}
+        <ScrollLink 
+          to="contact"
+          spy={true}
+          smooth={true}
+          duration={500}
+        ><div className="nav-button">contact</div></ScrollLink>
 			</div>
 		)
 	}
