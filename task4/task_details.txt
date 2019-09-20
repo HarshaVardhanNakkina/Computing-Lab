@@ -1,0 +1,37 @@
+quality software project management by futrell
+
+Apartment management system
+
+1.
+  =====> facilities
+  =====> payment for facilities
+  =====> how much paid, how long it can suffice
+  =====> user auth
+
+2.
+  =====> request for common facility (problems)
+  =====> online request
+  =====> timebound for response for a request
+  =====> automation of sending a request to a concerned person/org
+
+3.
+  =====> two interfaces
+    for user
+    for admin
+  =====> but only a single login interface
+  =====> two factor auth
+  =====> door number is unique, match with that
+  =====> door number, email id, mobile number required (any one of email, mobile)
+    door number format: "1-N-12-799/1"
+    if user has multiple properties???
+  =====> "set password" link is send after submission
+
+4.
+  =====> Database
+    not ambiguous
+
+-------------Tasks today-------------------
+
+1. registration and login interfaces
+2. find a development life cycle model
+3. ER Diag to represent login and reg page
