@@ -1,7 +1,7 @@
 quality software project management by futrell
 
 Apartment management system
-
+// 12-09-19
 1.
   =====> facilities
   =====> payment for facilities
@@ -35,3 +35,43 @@ Apartment management system
 1. registration and login interfaces
 2. find a development life cycle model
 3. ER Diag to represent login and reg page
+
+// 20-09-19
+
+1. Home page
+	- About the application
+2. profile page
+3. logout button
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -14,47 +14,62 @@ router.get('/register', (req, res) => res.render('register'));
 
 // Register Handler
 router.post('/register', (req, res) => {
-	const { name, email, password, password2 } = req.body;
+	const { doornum, email, mobile, password, password2 } = req.body;
 	let errors = [];
 
 	// check required fields
-	if (!name || !email || !password || !password2)
-		errors.push({ msg: 'Please fill in all the fields' });
+	if (!doornum || !(email || mobile) || !password || !password2)
+		errors.push({ msg: 'Please fill in the required fields' });
 
 	// check passwords match
 	if (password !== password2) errors.push({ msg: 'Passwords do not match' });
 
 	// check password length
-	if (password < 6)
-		errors.push({ msg: 'Password should atleast 6 characters' });
+	if (password.length < 6)
+    errors.push({ msg: 'Password should be atleast 6 characters' });
+  
+  // check for email or mobile
+  if(!(email || mobile)) 
+    errors.push({msg: 'Email or Mobile number is required'});
+
+  // door number regex check
+  if(!doornum.match(/^\d\-[A-Za-z]{1}\-\d{2}\-\d{3}\/\d$/g))
+    errors.push({msg: 'Door number format is not correct'});
+
+  // mobile number regex
+  if (!mobile.match(/^\d{10}$/g))
+    errors.push({ msg: 'Enter a valid mobile number' });
 
 	if (errors.length > 0) {
 		res.render('register', {
 			errors,
-			name,
-			email,
+			doornum,
+      email,
+      mobile,
 			password,
 			password2
 		});
 	} else {
 		// Validation passed
-		User.findOne({ email: email }).then(user => {
+		User.findOne({ doornum: doornum }).then(user => {
 			if (user) {
 				// Email already registered
 				errors.push({ msg: 'Email is already registered' });
-				res.render('register', {
-					errors,
-					name,
-					email,
-					password,
-					password2
-				});
+				res.render("register", {
+          errors,
+          doornum,
+          email,
+          mobile,
+          password,
+          password2
+        });
 			} else {
 				const newUser = new User({
-					name,
-					email,
-					password
-				});
+          doornum,
+          email,
+          mobile,
+          password
+        });
 
 				// Hash Password
 				bcrypt.genSalt(10, (err, salt) =>

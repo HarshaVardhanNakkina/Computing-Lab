@@ -11,13 +11,21 @@ require('./auth/passport')(passport);
 const app = express();
 
 // connect to mongoose
+const URI =
+  process.env.DB_ENV === "local"
+    ? process.env.MONOGO_URI_LOCAL
+    : process.env.MONGO_URI_CLOUD;
+
 mongoose
-	.connect(process.env.MONGO_URI, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true
-	})
-	.then(() => console.log('MongoDB is up'))
-	.catch(console.log);
+  .connect(URI,{
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
+  )
+  .then((db) => {
+    console.log("MongoDB is up")
+  })
+  .catch(console.log);
 
 // EJS
 app.use(expressLayouts);
