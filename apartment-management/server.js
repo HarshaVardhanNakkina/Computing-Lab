@@ -12,7 +12,7 @@ const app = express();
 
 // connect to mongoose
 const URI =
-  process.env.DB_ENV === "local"
+  process.env.DB_ENV === 'local'
     ? process.env.MONOGO_URI_LOCAL
     : process.env.MONGO_URI_CLOUD;
 
@@ -23,7 +23,7 @@ mongoose
     }
   )
   .then((db) => {
-    console.log("MongoDB is up")
+    console.log('MongoDB is up')
   })
   .catch(console.log);
 

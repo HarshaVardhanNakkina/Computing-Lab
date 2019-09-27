@@ -21,7 +21,13 @@ module.exports = function(passport) {
 								return done(null, false, {
 									message: 'Invalid credentials'
 								});
-							}
+              }
+              
+              if (!user.verified) {
+                return done(null, false, {
+                  message: 'Verify your email/mobile and set your password'
+                })
+              }
 						
 						// Match the password
 						bcrypt.compare(
