@@ -7,52 +7,11 @@ const nodemailer = require("nodemailer");
 // User model
 const User = require('../models/User');
 
-// Verification email
-async function sendVerficationMail() {
-  console.log('I am sending...')
-    
-  // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
-
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 25,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: "jude.kilback48@ethereal.email",
-      pass: "F2n5Mt6KGy9X1EWnB3"
-    }
-  });
-
-  // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <foo@example.com>', // sender address
-    to: "bar@example.com, baz@example.com", // list of receivers
-    subject: "Hello ✔", // Subject line
-    text: "Hello world?", // plain text body
-    html: "<b>Hello world?</b>" // html body
-  });
-
-  console.log('Message sent: %s', info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-  // Preview only available when sending through an Ethereal account
-  console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-}
-
-
-
+// Sendgrid mail function
+const sendPasswordSetupLink = require('./helpers/pswdresetupmail');
 
 // Register Page
-router.get('/', (req, res) => {
-  sendVerficationMail().catch(err => {
-    console.log('caught')
-    console.error(err);
-  });
-  res.render('register')
-});
+router.get('/', (req, res) => res.render('register'));
 
 // Register Handler
 router.post('/', (req, res) => {
@@ -112,8 +71,17 @@ router.post('/', (req, res) => {
         newUser
           .save()
           .then(user => {
-            req.flash('success_msg', 'Verify your email/mobile and set your password');
-            res.redirect('/users/login');
+						// send a mail verifications mail
+						console.log("sending the verification mail");
+						sendPasswordSetupLink(user)
+							.then((response) => {
+								console.log("verification mail has been sent");
+								req.flash('success_msg', 'Verify your email/mobile and set your password');
+								res.redirect('/users/login');
+							})
+							.catch(err => {
+								console.log(err);
+							})
           })
           .catch(console.log);
 

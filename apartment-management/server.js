@@ -13,8 +13,8 @@ const app = express();
 // connect to mongoose
 const URI =
   process.env.DB_ENV === 'local'
-    ? process.env.MONOGO_URI_LOCAL
-    : process.env.MONGO_URI_CLOUD;
+    ? process.env.MONGO_URI_LOCAL
+		: process.env.MONGO_URI_CLOUD;
 
 mongoose
   .connect(URI,{
