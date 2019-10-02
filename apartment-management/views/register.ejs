@@ -7,19 +7,19 @@
 			<% include ./partials/messages %>
 			<form action="/users/register" method="POST">
 				<div class="form-group">
-					<label for="doornum">Door number (e.g. "1-N-12-799/1")</label>
+					<label for="doornum">Door number (e.g. "1-N-12-799/29")</label>
 					<input
 						type="text"
 						id="doornum"
 						name="doornum"
 						class="form-control"
 						placeholder="Enter Door number"
-            value="<%= typeof doornum != 'undefined' ? doornum : '' %>"
-            required
+						value="<%= typeof doornum != 'undefined' ? doornum : '' %>"
+						required
 					/>
 				</div>
 				<div class="form-group">
-					<label for="email">Email (optional if you want to use mobile no.)</label>
+					<label for="email">Email</label>
 					<input
 						type="email"
 						id="email"
@@ -27,13 +27,21 @@
 						class="form-control"
 						placeholder="Enter Email"
 						value="<%= typeof email != 'undefined' ? email : '' %>"
+						required
 					/>
-        </div>
-        <div class="form-group">
-          <label for="mobile">Mobile number (optional if you want to use email)</label>
-          <input type="text" id="mobile" name="mobile" class="form-control" placeholder="Enter Mobile number"
-            value="<%= typeof mobile != 'undefined' ? mobile : '' %>" />
-        </div>
+				</div>
+				<div class="form-group">
+					<label for="mobile">Mobile number </label>
+					<input
+						type="text"
+						id="mobile"
+						name="mobile"
+						class="form-control"
+						placeholder="Enter Mobile number"
+						value="<%= typeof mobile != 'undefined' ? mobile : '' %>"
+						required
+					/>
+				</div>
 				<!-- <div class="form-group">
 					<label for="password">Password</label>
 					<input

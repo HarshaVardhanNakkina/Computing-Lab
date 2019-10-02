@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const TokenOTP = require('./TokenOTP');
 
 const UserSchema = new mongoose.Schema({
 	doornum: {
@@ -18,6 +19,11 @@ const UserSchema = new mongoose.Schema({
     default: false
   }
 });
+
+UserSchema.pre('remove', function(next) {
+	TokenOTP.remove({_userId: this._id}).exec();
+	next();
+})
 
 const User = mongoose.model('User', UserSchema);
 
