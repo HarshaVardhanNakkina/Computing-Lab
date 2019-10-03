@@ -26,7 +26,8 @@ async function sendOTP(user, tokenotp) {
 				TemplateLanguage: true,
 				Subject:'Verify your account',
 				Variables: {
-					otp
+					otp,
+					expiresIn: Math.floor(900/60)
 				}
 			}
 		]

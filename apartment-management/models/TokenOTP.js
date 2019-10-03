@@ -13,6 +13,10 @@ const TokenOTPSchema = new mongoose.Schema({
 		},
     type: String,
     required: true,
+		verified: {
+			type: Boolean,
+			default: false
+		},
     createdAt:{
       type: Date,
       required: true,
@@ -40,5 +44,6 @@ const TokenOTPSchema = new mongoose.Schema({
 	}
 });
 
+TokenOTPSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
 const TokenOTP = mongoose.model('TokenOTP', TokenOTPSchema);
 module.exports = TokenOTP;

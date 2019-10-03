@@ -3,7 +3,7 @@
 		<div class="card card-body">
 			<h1 class="text-center mb-3">OTP</h1>
 			<% include ./partials/messages %>
-			<form action="/users/confirmotp/<%= user_id %>" method="POST">
+			<form action="/users/confirmotp/<%= typeof user_id != 'undefined' ? user_id : ''%>" method="POST">
 				<div class="form-group">
 					<label for="otp">OTP</label>
 					<input
