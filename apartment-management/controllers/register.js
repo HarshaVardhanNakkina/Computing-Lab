@@ -5,12 +5,14 @@ const cryptoRandomString = require('crypto-random-string');
 const passport = require('passport');
 const nodemailer = require('nodemailer');
 const generateOTP = require('./helpers/otpgenerator');
+
 // User model
 const User = require('../models/User');
-// Password setup model
+
+// otp, tokens model
 const TokenOTP = require('../models/TokenOTP');
 
-// Sendgrid mail function
+// otp mail function
 const sendOTP = require('./helpers/sendotp');
 
 // Register Page
@@ -22,21 +24,8 @@ router.post('/', (req, res) => {
 	const { doornum, email, mobile } = req.body;
 	let errors = [];
 
-	// check required fields
-	// if (!doornum || !(email || mobile) || !password || !password2)
 	if (!doornum || !email || !mobile)
 		errors.push({ msg: 'Please fill in the required fields' });
-
-	// check passwords match
-	// if (password !== password2) errors.push({ msg: 'Passwords do not match' });
-
-	// check password length
-	// if (password.length < 6)
-	//   errors.push({ msg: 'Password should be atleast 6 characters' });
-
-	// check for email or mobile
-	if (!email || !mobile)
-		errors.push({ msg: 'Email or Mobile number is required' });
 
 	// door number regex check
 	if (!doornum.match(/^\d\-[A-Z]{1}\-\d{2}\-\d{3}\/\d{2}$/g))
@@ -54,7 +43,7 @@ router.post('/', (req, res) => {
 			mobile
 		});
 	} else {
-		// Validation passed
+		// all validations passed
 		User.findOne({ doornum }).then(user => {
 			if (user) {
 				// Email already registered
@@ -89,10 +78,17 @@ router.post('/', (req, res) => {
 								sendOTP(user, tokenotp)
 									.then(response => {
 										console.log('verification mail has been sent');
-										tokenotp.otp.sent = true;
-										tokenotp.save();
-										req.flash('success_msg', 'OTP has been sent to your email');
-										res.redirect(`/users/confirmotp/${user._id}`);
+										tokenotp.otpSent = true;
+										tokenotp
+											.save()
+											.then(() => {
+												req.flash(
+													'success_msg',
+													'OTP has been sent to your email'
+												);
+												res.redirect(`/users/confirmotp/${user._id}`);
+											})
+											.catch(console.log);
 									})
 									.catch(err => {
 										console.log(err);
@@ -101,27 +97,6 @@ router.post('/', (req, res) => {
 							.catch(console.log);
 					})
 					.catch(console.log);
-
-				// Hash Password
-				/*
-          bcrypt.genSalt(10, (err, salt) =>
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              if (err) throw err;
-              // Set password to hashed password
-              newUser.password = hash;
-              newUser
-                .save()
-                .then(user => {
-                  req.flash(
-                    'success_msg',
-                    'You are now registered and can login'
-                  );
-                  res.redirect('/users/login');
-                })
-                .catch(console.log);
-            })
-          );
-        */
 			}
 		});
 	}

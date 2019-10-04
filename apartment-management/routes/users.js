@@ -17,6 +17,6 @@ router.use('/logout', require('../controllers/logout'));
 router.use('/register', require('../controllers/register'));
 
 // OTP confirmation contorller
-router.use('/confirmotp', require('../controllers/otpconfirmation'));
+router.use('/confirmotp', require('../controllers/confirmotp'));
 
 module.exports = router;

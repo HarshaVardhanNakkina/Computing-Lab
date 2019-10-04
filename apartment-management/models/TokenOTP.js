@@ -1,46 +1,41 @@
 const mongoose = require('mongoose');
 
 const TokenOTPSchema = new mongoose.Schema({
-  _userId:{
-    type: mongoose.Schema.Types.ObjectId, 
-    required: true,
-    ref: 'User',
-  },
-  token: {
-		sent: {
-			type: Boolean,
-			default: false
-		},
-    type: String,
-    required: true,
-		verified: {
-			type: Boolean,
-			default: false
-		},
-    createdAt:{
-      type: Date,
-      required: true,
-      default: Date.now,
-      expires: 900
-    }
+	_userId: {
+		type: mongoose.Schema.Types.ObjectId,
+		required: true,
+		ref: 'User'
+	},
+	token: {
+		type: String,
+		index: { expires: 900 },
+		required: true,
 	},
 	otp: {
-		sent: {
-			type: Boolean,
-			default: false
-		},
 		type: String,
+		index: { expires: 900 },
 		required: true,
-		verified: {
-			type: Boolean,
-			default: false
-		},
-		createdAt: {
-			type: Date,
-			required: true,
-			default: Date.now,
-			expires: 900
-		}
+	},
+	otpSent: {
+		type: Boolean,
+		default: false
+	},
+	tokenSent: {
+		type: Boolean,
+		default: false
+	},
+	otpVerified: {
+		type: Boolean,
+		default: false
+	},
+	tokenVerified: {
+		type: Boolean,
+		default: false
+	},
+	createdAt: {
+		type: Date,
+		required: true,
+		default: Date.now
 	}
 });
 

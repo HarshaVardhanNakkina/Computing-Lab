@@ -1,20 +1,17 @@
-async function sendOTP(user, tokenotp) {
-	const { email, mobile } = user;
-	const { otp } = tokenotp;
-	console.log(email, mobile, otp);
-
+async function sendPswdSetupLink(user, token) {
+	const { _id, email, mobile } = user;
 	// mailjet
 	const mailjet = require('node-mailjet').connect(
 		process.env.MAILJET_USER,
 		process.env.MAILJET_AUTH
 	);
-
-	//! just for testing remove after testing
-	if(otp) {
+	let link = `http://localhost:5050/users/pswdsetup?user_id=${_id}&token=${token}`;
+	console.log('sending password setup link');
+	if(token) {
+		console.log(link);
 		return Promise.resolve();
 	}
-
-	// const request = 
+	// const request =
 	return mailjet.post('send', { version: 'v3.1' }).request({
 		Messages: [
 			{
@@ -26,14 +23,14 @@ async function sendOTP(user, tokenotp) {
 					{
 						Email: email,
 						Name: email
-					},
+					}
 				],
-				TemplateID: 1024854,
+				TemplateID: 1028351,
 				TemplateLanguage: true,
-				Subject:'Verify your account',
+				Subject: 'Setup your password',
 				Variables: {
-					otp,
-					expiresIn: Math.floor(900/60)
+					link,
+					expiresIn: Math.floor(900 / 60)
 				}
 			}
 		]
@@ -47,5 +44,4 @@ async function sendOTP(user, tokenotp) {
 	// 	});
 }
 
-
-module.exports = sendOTP;
+module.exports = sendPswdSetupLink;

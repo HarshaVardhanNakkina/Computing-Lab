@@ -1,0 +1,36 @@
+<div class="row mt-5">
+	<div class="col-md-6 m-auto">
+		<div class="card card-body">
+			<h1 class="text-center mb-3">Setup a password</h1>
+			<% include ./partials/messages %>
+			<form action="/users/pswdsetup/?user_id=<%=user_id%>&token=<%=token%>" method="POST">
+				<div class="form-group">
+					<label for="pswd">Password</label>
+					<input
+						type="password"
+						id="pswd"
+						name="pswd"
+						class="form-control"
+						value="<%= typeof pswd !== 'undefined' ? pswd : ''%>"
+						placeholder="Enter a password"
+					/>
+				</div>
+				<div class="form-group">
+					<label for="confpswd">Confirm Password</label>
+					<input
+						type="password"
+						id="confpswd"
+						name="confpswd"
+						class="form-control"
+						value="<%= typeof confpswd !== 'undefined' ? confpswd : '' %>"
+						placeholder="Confirm Password"
+					/>
+				</div>
+				<button type="submit" class="btn btn-primary btn-block">Set password</button>
+			</form>
+			<!-- <p class="lead mt-4">
+				No Account? <a href="/users/register">Set password</a>
+			</p> -->
+		</div>
+	</div>
+</div>
