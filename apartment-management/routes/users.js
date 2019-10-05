@@ -4,19 +4,19 @@ const router = express.Router();
 // User model
 const User = require('../models/User');
 
-// Password reset controllers
-router.use('/pswdsetup', require('../controllers/pswdsetup'));
-
-// Login controllers
+// Login controller
 router.use('/login', require('../controllers/login'));
 
-// Logout controllers
+// Logout controller
 router.use('/logout', require('../controllers/logout'));
 
-// Registration controllers
+// Registration controller
 router.use('/register', require('../controllers/register'));
 
 // OTP confirmation contorller
-router.use('/confirmotp', require('../controllers/confirmotp'));
+router.use('/confirmotp', require('../controllers/otp_confirmation'));
+
+// Password setup controller
+router.use('/pswdsetup', require('../controllers/pswd_setup'));
 
 module.exports = router;
