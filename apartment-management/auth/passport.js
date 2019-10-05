@@ -14,12 +14,14 @@ module.exports = function(passport) {
 			{usernameField: 'email'},
 			(email, password, done) => {
 				// Match user
-				User.findOne({ email: email })
+				User.findOne({ email })
 					.then(
 						user => {
 							if (!user) {
 								return done(null, false, {
-									message: 'Invalid credentials'
+									message: 'Invalid credentials',
+									email,
+									password
 								});
               }
               
@@ -30,16 +32,15 @@ module.exports = function(passport) {
               }
 						
 						// Match the password
-						bcrypt.compare(
-							password,
-							user.password,
-							(err, isMatch) => {
+						bcrypt.compare(password,user.password,(err, isMatch) => {
 								if (err) throw err;
 								if (isMatch) {
 									return done(null, user);
 								} else {
 									return done(null, false, {
-										message: 'Invalid credentials'
+										message: 'Invalid credentials',
+										email,
+										password
 									});
 								}
 						});

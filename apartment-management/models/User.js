@@ -7,17 +7,21 @@ const UserSchema = new mongoose.Schema({
 		required: true
 	},
 	email: {
-    type: String,
-    default: null
-  },
+		type: String,
+		required: true
+	},
   mobile: {
     type: String,
-    default: null
+    required: true
   },
+	password: {
+		type: String,
+		default: null
+	},
   verified: {
     type: Boolean,
     default: false
-  }
+	},
 });
 
 UserSchema.pre('remove', function(next) {

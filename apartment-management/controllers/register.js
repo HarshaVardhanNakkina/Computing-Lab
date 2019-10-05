@@ -1,20 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
 const cryptoRandomString = require('crypto-random-string');
-const passport = require('passport');
-const nodemailer = require('nodemailer');
 const generateOTP = require('./helpers/otpgenerator');
 
 // User model
 const User = require('../models/User');
-
 // otp, tokens model
 const TokenOTP = require('../models/TokenOTP');
-
 // otp mail function
 const sendOTP = require('./helpers/sendotp');
-
 // Register Page
 router.get('/', (req, res) => res.render('register'));
 
@@ -55,11 +49,8 @@ router.post('/', (req, res) => {
 					mobile
 				});
 			} else {
-				const newUser = new User({
-					doornum,
-					email,
-					mobile
-				});
+				const newUser = new User({ doornum, email, mobile });
+				
 				newUser
 					.save()
 					.then(user => {
@@ -90,9 +81,7 @@ router.post('/', (req, res) => {
 											})
 											.catch(console.log);
 									})
-									.catch(err => {
-										console.log(err);
-									});
+									.catch(console.log);
 							})
 							.catch(console.log);
 					})
