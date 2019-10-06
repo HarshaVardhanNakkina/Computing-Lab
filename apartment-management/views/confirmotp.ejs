@@ -3,7 +3,7 @@
 		<div class="card card-body">
 			<h1 class="text-center mb-3">OTP</h1>
 			<% include ./partials/messages %>
-			<form action="/users/confirmotp/<%= typeof user_id != 'undefined' ? user_id : ''%>" method="POST">
+			<form action="/users/confirmotp/<%= typeof user_id !== 'undefined' ? user_id : ''%>" method="POST">
 				<div class="form-group">
 					<label for="otp">OTP</label>
 					<input
@@ -17,7 +17,7 @@
 				<button type="submit" class="btn btn-primary btn-block">Submit</button>
 			</form>
 			<p class="lead mt-4">
-				Did not receive? <a href="/users/register">resend</a>
+				Did not receive? <a href="/users/confirmotp/<%= typeof user_id !== 'undefined' ? user_id : ''%>">resend</a>
 			</p>
 		</div>
 	</div>
