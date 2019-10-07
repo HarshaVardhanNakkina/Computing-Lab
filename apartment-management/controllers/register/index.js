@@ -1,18 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const cryptoRandomString = require('crypto-random-string');
-const generateOTP = require('./otp-generator');
-const sendOTP = require('./send-otp');
+const otpMailHandler = require('../helpers/otpmail-handler');
 
 // models
 const User = require('../../models/User');
-const TokenOTP = require('../../models/TokenOTP');
 
 // Register Page
 router.get('/', (req, res) => res.render('register'));
 
 // Register Handler
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
 
 	const { doornum, email, mobile } = req.body;
 	let errors = [];
@@ -39,8 +36,8 @@ router.post('/', (req, res) => {
 		// all validations passed
 		User.findOne({ doornum }).then(user => {
 			if (user) {
-				// Email already registered
-				errors.push({ msg: 'Email is already registered' });
+				// Door no. already registered
+				errors.push({ msg: 'Door number is already registered' });
 				res.render('register', {
 					errors,
 					doornum,
@@ -49,29 +46,11 @@ router.post('/', (req, res) => {
 				});
 			} else {
 				const newUser = new User({ doornum, email, mobile });
-
-				newUser.save().then(user => {
-
-					const newTokens = new TokenOTP({
-						_userId: user._id,
-						token: cryptoRandomString({ length: 64, type: 'url-safe' }),
-						otp: generateOTP()
-					});
-
-					newTokens.save().then(tokens => {
-						console.log('sending an otp email');
-						sendOTP(user, tokens).then(response => {
-							console.log('verification mail has been sent');
-							tokens.otpSent = true;
-							tokens.save().then(()=>{
-								req.flash('success_msg', 'A mail with OTP will be sent for verification');
-								res.redirect(`/users/confirmotp/${user._id}`);
-							}).catch(console.log);
-						}).catch(console.log);
-					}).catch(console.log);
-				}).catch(console.log);
+				newUser.save()
+					.then(user => otpMailHandler(user, req, res))
+					.catch(next);
 			}
-		});
+		}).catch(next)
 	}
 });
 

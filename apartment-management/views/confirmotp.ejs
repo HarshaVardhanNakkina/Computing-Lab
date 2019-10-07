@@ -3,6 +3,7 @@
 		<div class="card card-body">
 			<h1 class="text-center mb-3">OTP</h1>
 			<% include ./partials/messages %>
+			<div class="resend-success-fail"></div>
 			<form action="/users/confirmotp/<%= typeof user_id !== 'undefined' ? user_id : ''%>" method="POST">
 				<div class="form-group">
 					<label for="otp">OTP</label>
@@ -12,12 +13,22 @@
 						name="otp"
 						class="form-control"
 						placeholder="Enter OTP"
+						value="<%= typeof otp !== 'undefined' ? otp : '' %>"
+						required
 					/>
 				</div>
 				<button type="submit" class="btn btn-primary btn-block">Submit</button>
 			</form>
 			<p class="lead mt-4">
-				Did not receive? <a href="/users/confirmotp/<%= typeof user_id !== 'undefined' ? user_id : ''%>">resend</a>
+				Did not receive? 
+				<button
+					type="button"
+					id="resend-otp"
+					class="btn-resend"
+					data-user_id = "<%= typeof user_id !== 'undefined' ? user_id : ''%>"
+				>
+					resend
+				</button>
 			</p>
 		</div>
 	</div>

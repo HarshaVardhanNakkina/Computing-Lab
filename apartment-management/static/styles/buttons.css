@@ -1,0 +1,18 @@
+.btn-resend {
+	font-weight: 400;
+	border: none;
+	padding: 0;
+	margin: 0;
+	color: #00bc8c;
+	background: none;
+}
+
+.btn-resend:hover {
+	text-decoration: underline;
+	opacity: 0.7;
+}
+
+.btn-resend:disabled {
+	text-decoration: none;
+	opacity: 0.4;
+}

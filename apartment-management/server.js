@@ -1,9 +1,10 @@
 const express = require('express');
+const compression= require('compression');
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
-const passport = require('passport'); 
+const passport = require('passport');
 
 // Passport config
 require('./auth/passport')(passport);
@@ -30,6 +31,9 @@ mongoose
 // EJS
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
+
+// Compression for reduced response size
+app.use(compression());
 
 // Bodyparser
 app.use(express.urlencoded({extended: false}));
@@ -58,6 +62,9 @@ app.use((req, res, next) => {
 	res.locals.error = req.flash('error');
 	next();
 });
+
+// Static files css, js etc...
+app.use(express.static('static', { maxAge: 31557600 }));
 
 //Routes
 app.use('/', require('./routes/index'));
