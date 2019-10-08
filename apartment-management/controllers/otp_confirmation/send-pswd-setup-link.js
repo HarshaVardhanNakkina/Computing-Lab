@@ -1,5 +1,6 @@
-async function sendPswdSetupLink(user, token) {
+async function sendPswdSetupLink(user, data) {
 	const { _id, email, mobile } = user;
+	const { token } = data;
 	// mailjet
 	const mailjet = require('node-mailjet').connect(
 		process.env.MAILJET_USER,
@@ -7,8 +8,8 @@ async function sendPswdSetupLink(user, token) {
 	);
 	let link = `http://localhost:5050/users/pswdsetup?user_id=${_id}&token=${token}`;
 	console.log('sending password setup link');
+	console.log(link);
 	if(token) {
-		console.log(link);
 		return Promise.resolve();
 	}
 	// const request =

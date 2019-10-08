@@ -3,9 +3,20 @@
 		<div class="card card-body text-center">
 			<p>Your password setup link has been sent successfully.
 			</p>
+			<div class="resend-success-fail"></div>
+			<a class="btn-resend" href = "/">
+				go to home
+			</a>
 			<p class='lead mt-4'>
 				Did not receive?
-				<a href="http://">Resend</a>
+				<button
+					type="button"
+					id="resend-setup-link"
+					class="btn-resend"
+					data-user_id = "<%= typeof user_id !== 'undefined' ? user_id : ''%>"
+				>
+					Resend
+				</button>
 			</p>
 		</div>
 	</div>

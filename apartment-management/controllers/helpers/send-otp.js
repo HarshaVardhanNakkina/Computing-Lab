@@ -1,6 +1,6 @@
-async function sendOTP(user, tokenotp) {
+async function sendOTP(user, data) {
 	const { email, mobile } = user;
-	const { otp } = tokenotp;
+	const { otp } = data;
 	console.log(email, mobile, otp);
 
 	// mailjet

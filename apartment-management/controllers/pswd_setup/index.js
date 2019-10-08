@@ -5,7 +5,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
 
 // models required
 const User = require('../../models/User');
-const TokenOTP = require('../../models/TokenOTP');
+const Token = require('../../models/Token');
 
 const invalidSoRedirect = require('../helpers/invalidsoredirect');
 
@@ -13,10 +13,10 @@ router.get('/', (req, res, next) => {
 	const { user_id, token } = req.query;
 	console.log(req.query);
 	// check if user_id is valid or not
-	TokenOTP.findOne({ _userId: user_id })
+	Token.findOne({ _userId: user_id })
 		.then(user => {
 			if (!user) invalidSoRedirect(req, res, 'Invaid user account', '/');
-			else if(user.tokenVerified) invalidSoRedirect(req, res, 'Already verified', '/');
+			else if(user.tokenVerified) invalidSoRedirect(req, res, 'Already verified, please login', '/');
 			else res.render('pswdsetup', { user_id, token });
 		})
 		.catch(console.log);
@@ -48,11 +48,11 @@ router.post('/', (req, res, next) => {
 		});
 	} else {
 		// no errors, all good
-		TokenOTP.findOne({ _userId: user_id })
-			.then(tokens => {
-				if (!tokens) invalidSoRedirect(req, res, 'Invalid user account', '/');
+		Token.findOne({ _userId: user_id })
+			.then(data => {
+				if (!data) invalidSoRedirect(req, res, 'Invalid user account', '/');
 				else {
-					const { token: storedToken } = tokens;
+					const { token: storedToken } = data;
 					if (token !== storedToken) 
 						invalidSoRedirect(req, res, 'Invalid user account', '/');
 					else {
@@ -68,7 +68,7 @@ router.post('/', (req, res, next) => {
 										{ $set: { password: hash, verified: true } },
 										{multi: true}
 									),
-									TokenOTP.updateMany(
+									Token.updateMany(
 										{ _userId: ObjectId(user_id) },
 										{ $set: { tokenVerified: true } },
 										{multi: true}
