@@ -21,19 +21,71 @@
 			href="/styles/buttons.css"
 			media="print"
 			onload="this.media='all'"
-		>
+		/>
+		<link
+			rel="stylesheet"
+			href="/styles/home.css"
+		/>
+		<style>
+			/* body {
+				background-image: url(https://images.unsplash.com/photo-1419454073861-6e5bccea68ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1504&q=80);
+				background-size: cover;
+				background-attachment: fixed;
+				background-position: center;
+				background-repeat: no-repeat;
+			} */
+		</style>
 		<title>Apartments Management</title>
 	</head>
 	<body>
-			<%- body %>
+			<nav
+				class="navbar navbar-dark navbar-expand-sm sticky-top"
+				style="background: #251439;background: inherit;	"
+			>
+				<a class="navbar-brand justify-selft-start" href="/"
+					>Apartment Management</a
+				>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-toggle="collapse"
+					data-target="#navbarNavAltMarkup"
+					aria-controls="navbarNavAltMarkup"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+					<div class="nav navbar-nav ml-auto">
+						<a class="nav-item nav-link mr-sm-2" href="/">Home</a>
+						<a class="nav-item nav-link mr-sm-2" href="#">About</a>
+						<a class="nav-item nav-link mr-sm-2" href="#">Features</a>
+						<a class="nav-item nav-link mr-sm-2" href="/users/login">Login</a>
+						<a class="nav-item nav-link mr-sm-2" href="/users/register"
+							>Register</a
+						>
+					</div>
+				</div>
+			</nav>
+		
+		<%- body %>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+			integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			crossorigin="anonymous"
+		></script>
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 			crossorigin="anonymous"
 		></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha256-CjSoeELFOcH0/uxWu6mC/Vlrc1AARqbm/jiiImDGV3s=" crossorigin="anonymous"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha256-CjSoeELFOcH0/uxWu6mC/Vlrc1AARqbm/jiiImDGV3s="
+			crossorigin="anonymous"
+		></script>
 		<script src="/js/resend-handlers.js" async></script>
 	</body>
 </html>
