@@ -64,7 +64,7 @@ app.use((req, res, next) => {
 });
 
 // Static files css, js etc...
-app.use(express.static('static', { maxAge: 31557600 }));
+app.use(express.static('static', { cacheControl: true, maxAge: '1d' }));
 
 //Routes
 app.use('/', require('./routes/index'));

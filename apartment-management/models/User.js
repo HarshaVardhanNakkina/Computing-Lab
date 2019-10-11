@@ -5,7 +5,8 @@ const Token = require('./Token');
 const UserSchema = new mongoose.Schema({
 	doornum: {
 		type: String,
-		required: true
+		required: true,
+		unique: true
 	},
 	email: {
 		type: String,
@@ -23,6 +24,14 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false
 	},
+	firtTimeLogin: {
+		type: Boolean,
+		default: true
+	},
+	detailsGiven: {
+		type: Boolean,
+		default: false
+	}
 });
 
 UserSchema.pre('remove', function(next) {

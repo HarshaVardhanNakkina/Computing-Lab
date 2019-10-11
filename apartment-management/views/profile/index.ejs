@@ -1,0 +1,57 @@
+<div class="container col-sm-5 mt-auto mr-auto ml-auto mb-2 pb-2 bg-light shadow-lg rounded">
+	<div class="col-sm-12 m-auto">
+		<h4 class="text-center display-4 my-4">
+			Profile details
+		</h4>
+		<form action="/update" method="post" enctype="multipart/form-data">
+			<div class="form-group">
+				<label for="flatnum">Flat number:</label>
+				<input
+					type="text"
+					name="flatnum"
+					id="flatnum"
+					class="form-control"
+					placeholder="Flat number"
+					required
+				/>
+			</div>
+			<div class="form-group">
+				<label for="name">Your Name:</label>
+				<input type="text" name="name" id="name" class="form-control" placeholder="Name" required/>
+			</div>
+			<div class="form-group">
+				<label for="father">Name of your father:</label>
+				<input type="text" name="fathername" id="father" class="form-control" placeholder="Name of your father"/>
+			</div>
+			<div class="form-group">
+				<label for="mother">Name of your mother:</label>
+				<input type="text" name="mothername" id="mother" class="form-control" placeholder="Name of your mother"/>
+			</div>
+			<div class="form-group">
+				<label for="occupation">Your Occupation:</label>
+				<input type="text" name="occupation" id="occupation" class="form-control" placeholder="Your Occupation"/>
+			</div>
+			<div class="form-group">
+				<label for="commaddr">Communication Address:</label>
+				<textarea
+					type=""
+					name="commaddress"
+					id="commaddr"
+					class="form-control"
+					placeholder="Communication Address"
+					cols="30" rows="5"
+				></textarea>
+			</div>
+			<div class="form-group">
+				<label for="permaddr">Permanent Address:</label>
+				<textarea
+					name="permaddress"
+					id="permaddr"
+					class="form-control"
+					placeholder="Permanent Address"
+					cols="30" rows="5"
+				></textarea>
+			</div>
+		</form>
+	</div>
+</div>

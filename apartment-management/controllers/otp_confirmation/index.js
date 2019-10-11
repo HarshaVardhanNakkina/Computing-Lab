@@ -12,6 +12,8 @@ const OTP = require('../../models/OTP');
 const Token = require('../../models/Token');
 
 router.get('/:id', (req, res) => {
+	//! SERIOUS BUG, IF THE USER HAS ALREADY VERIFIED OTP
+	//! THEN DON'T LET SUBMIT ANOTHER
 	const { id: user_id } = req.params;
 	res.render('confirmotp', { user_id });
 });
@@ -37,7 +39,9 @@ router.post('/:id', (req, res, next) => {
 								errors.push({ msg });
 								res.render('confirmotp', { user_id, errors });
 							} else {
-								pswdSetupMailHandler(user, req, res)
+								data.save().then(() => {
+									pswdSetupMailHandler(user, req, res)
+								}).catch(next)
 							}
 						}).catch(next);
 				}

@@ -39,9 +39,9 @@
 	</head>
 	<body>
 			<nav
-				class="navbar navbar-dark navbar-expand-sm sticky-top"
-				style="background: #251439;background: inherit;	"
+				class="navbar navbar-dark bg-primary navbar-expand-sm sticky-top"
 			>
+			<!-- style="background: #251439;background: inherit;	" -->
 				<a class="navbar-brand justify-selft-start" href="/"
 					>Apartment Management</a
 				>
@@ -61,10 +61,12 @@
 						<a class="nav-item nav-link mr-sm-2" href="/">Home</a>
 						<a class="nav-item nav-link mr-sm-2" href="#">About</a>
 						<a class="nav-item nav-link mr-sm-2" href="#">Features</a>
-						<a class="nav-item nav-link mr-sm-2" href="/users/login">Login</a>
-						<a class="nav-item nav-link mr-sm-2" href="/users/register"
-							>Register</a
-						>
+						<% if(typeof user !== 'undefined') { %>
+							<a class="nav-item nav-link mr-sm-2" href="/users/logout">Logout</a>
+							<% } else { %>
+								<a class="nav-item nav-link mr-sm-2" href="/users/login">Login</a>
+								<a class="nav-item nav-link mr-sm-2" href="/users/register">Register</a>
+						<% } %>
 					</div>
 				</div>
 			</nav>
