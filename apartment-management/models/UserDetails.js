@@ -1,14 +1,19 @@
 const mongoose = require('mongoose');
 
 const UserDetailsSchema = new mongoose.Schema({
+  _userId: {
+		type: mongoose.Schema.Types.ObjectId,
+		required: true,
+		ref: 'User'
+	},
 	flatnum: {
 		type: String,
 		required: true,
 		unique: true
 	},
 	profilepic: {
-		type: String,
-		required: true
+    type: String,
+    default:''
 	},
   name: {
     type: String,
@@ -26,7 +31,7 @@ const UserDetailsSchema = new mongoose.Schema({
 		type: String,
 		default: null
 	},
-	comaddress: {
+	commaddress: {
 		type: String,
 		required: true
 	},

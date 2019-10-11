@@ -15,7 +15,7 @@ const app = express();
 const URI =
   process.env.DB_ENV === 'local'
     ? process.env.MONGO_URI_LOCAL
-		: process.env.MONGO_URI_CLOUD;
+    : process.env.MONGO_URI_CLOUD;
 
 mongoose
   .connect(URI,{
@@ -36,7 +36,7 @@ app.set('view engine', 'ejs');
 app.use(compression());
 
 // Bodyparser
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 // Express Session middleware

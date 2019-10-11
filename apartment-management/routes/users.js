@@ -19,4 +19,6 @@ router.use('/confirmotp', require('../controllers/otp_confirmation'));
 // Password setup controller
 router.use('/pswdsetup', require('../controllers/pswd_setup'));
 
+router.use('/profile', require('../controllers/profile'));
+
 module.exports = router;

@@ -8,9 +8,4 @@ router.get('/', (req, res) => {
 	res.render('home', { user: req.user });
 });
 
-// profile
-router.get('/profile', ensureAuthenticated, (req, res) => {
-	res.render('profile', { user: req.user });
-});
-
 module.exports = router;
