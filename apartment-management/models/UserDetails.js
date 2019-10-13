@@ -11,9 +11,9 @@ const UserDetailsSchema = new mongoose.Schema({
 		required: true,
 		unique: true
 	},
-	profilepic: {
-    type: String,
-    default:''
+	profilepicId: {
+    type: mongoose.Schema.Types.ObjectId,
+    default: null
 	},
   name: {
     type: String,

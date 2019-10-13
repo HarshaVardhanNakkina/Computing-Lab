@@ -17,16 +17,14 @@ const URI =
     ? process.env.MONGO_URI_LOCAL
     : process.env.MONGO_URI_CLOUD;
 
-mongoose
-  .connect(URI,{
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
-  )
-  .then((db) => {
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+
+mongoose.connect(URI).then((db) => {
     console.log('MongoDB is up')
-  })
-  .catch(console.log);
+  }).catch(console.log);
 
 // EJS
 app.use(expressLayouts);

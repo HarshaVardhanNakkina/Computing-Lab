@@ -18,13 +18,7 @@
 		/>
 		<link
 			rel="stylesheet"
-			href="/styles/buttons.css"
-			media="print"
-			onload="this.media='all'"
-		/>
-		<link
-			rel="stylesheet"
-			href="/styles/home.css"
+			href="/styles/styles.min.css"
 		/>
 		<style>
 			/* body {
@@ -39,7 +33,7 @@
 	</head>
 	<body>
 			<nav
-				class="navbar navbar-dark bg-primary navbar-expand-sm sticky-top"
+				class="navbar navbar-dark bg-primary navbar-expand-md sticky-top"
 			>
 			<!-- style="background: #251439;background: inherit;	" -->
 				<a class="navbar-brand justify-selft-start" href="/"
@@ -61,8 +55,9 @@
 						<a class="nav-item nav-link mr-sm-2" href="/">Home</a>
 						<a class="nav-item nav-link mr-sm-2" href="#">About</a>
 						<a class="nav-item nav-link mr-sm-2" href="#">Features</a>
-						<% if(typeof user !== 'undefined') { %>
+						<% if(typeof user_id !== 'undefined') { %>
 							<a class="nav-item nav-link mr-sm-2" href="/users/logout">Logout</a>
+							<a class="nav-item nav-link mr-sm-2" href="<%=`/users/profile/${user_id}` %>">Profile</a>
 							<% } else { %>
 								<a class="nav-item nav-link mr-sm-2" href="/users/login">Login</a>
 								<a class="nav-item nav-link mr-sm-2" href="/users/register">Register</a>
@@ -88,6 +83,6 @@
 			integrity="sha256-CjSoeELFOcH0/uxWu6mC/Vlrc1AARqbm/jiiImDGV3s="
 			crossorigin="anonymous"
 		></script>
-		<script src="/js/resend-handlers.js" async></script>
+		<script src="/js/app.min.js" async></script>
 	</body>
 </html>

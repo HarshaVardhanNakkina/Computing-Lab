@@ -1,0 +1,17 @@
+.profile-details {
+	box-shadow: black 0px 19px 40px 20px;
+}
+.profile-pic {
+	width: 100%;
+}
+@media screen and (max-width: 1024px) {
+	.forms-container {
+		margin: 0 !important;
+	}
+	.details-form, .pics-form {
+		max-width: 100% !important;
+	}
+	.details-form form {
+		margin: 0 !important;
+	}
+}

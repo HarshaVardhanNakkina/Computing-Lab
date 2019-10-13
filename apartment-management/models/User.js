@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false
 	},
-	firtTimeLogin: {
+	firstTimeLogin: {
 		type: Boolean,
 		default: true
 	},

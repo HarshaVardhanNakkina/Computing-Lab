@@ -38,4 +38,4 @@ $('#resend-setup-link').click(function(){
 	}).always(() => {
 		$(this).prop('disabled', false);
 	})
-})
+});
