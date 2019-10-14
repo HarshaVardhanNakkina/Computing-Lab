@@ -8,6 +8,16 @@ const Grid = require('gridfs-stream');
 const cryptoRandomString = require('crypto-random-string');
 const path = require('path');
 
+//* PROFILE PIC UPLOAD
+const URI = 
+process.env.DB_ENV === 'local' ? process.env.MONGO_URI_LOCAL : process.env.MONGO_URI_CLOUD;
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+
+const connection = mongoose.createConnection(URI);
 const { ensureAuthenticated } = require('../../auth/auth');
 
 // Models
@@ -70,9 +80,10 @@ router.post('/update', ensureAuthenticated, (req, res, next) => {
 		let userDet = new Object({ _userId: ObjectId(user_id), flatnum, name, fathername, mothername, occupation, commaddress, permaddress });
 
 		UserDetails.findOneAndUpdate({ _userId: user_id }, userDet, {new: true, upsert: true}).then((newDetails) => {
-			console.log(newDetails);
+			// console.log(newDetails);
 			User.findOneAndUpdate({_id: user_id}, {detailsGiven: true, firstTimeLogin: false}).then((updatedUser) => {
 				req.flash('success_msg', 'profile is updated')
+				req.flash('user_id', user_id);
 				res.redirect(`/users/profile/${user_id}`);
 			}).catch(next);
 		}).catch(next);
@@ -80,16 +91,7 @@ router.post('/update', ensureAuthenticated, (req, res, next) => {
   
 });
 
-//* PROFILE PIC UPLOAD
-const URI = 
-process.env.DB_ENV === 'local' ? process.env.MONGO_URI_LOCAL : process.env.MONGO_URI_CLOUD;
-
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('useUnifiedTopology', true);
-
-const connection = mongoose.createConnection(URI);
+//* Upload, upate, delete profile pics...
 
 let gfs;
 connection.once('open', () => {
@@ -134,7 +136,7 @@ function deletePrevProfilePic(req, res, next){
 }
 
 router.post('/upload', deletePrevProfilePic, upload.single('profilepic'), (req, res, next) => {
-	console.log("HELL YEAH UPLOAD");
+	// console.log("HELL YEAH UPLOAD");
 	const { user_id } = req.query;
 	const { file } = req;
 	UserDetails.findOneAndUpdate(
@@ -148,7 +150,7 @@ router.post('/upload', deletePrevProfilePic, upload.single('profilepic'), (req, 
 });
 
 router.get('/profilepic/:id', (req, res, next) => {
-	console.log("HELL YEAH PROFILE PIC");
+	// console.log("HELL YEAH PROFILE PIC");
 	const { id } = req.params;
 	gfs.files.findOne({ _id: ObjectId(id) }, (err, file) => {
 		if (err) next(err);
