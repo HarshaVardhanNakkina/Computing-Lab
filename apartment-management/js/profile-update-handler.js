@@ -1,5 +1,3 @@
-import { fail } from "assert";
-
 $('#profile-details-form').submit(function(event) {
 	event.preventDefault();
 
@@ -42,3 +40,16 @@ $('#profile-details-form').submit(function(event) {
 		submitButton.prop('disabled', false);
 	})
 });
+
+// $('#profile-pic-input').on('change', function(event) {
+//   console.log('HELL YEAH CHANGED');
+//   console.log(event);
+//   let filename = $(this).val().split('\\').pop();
+//   console.log($(this).val());
+// })
+
+$(".custom-file-input").on("change", function() {
+  let fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+

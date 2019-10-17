@@ -102,9 +102,9 @@
 				<div class="card card-body mb-3 p-2">
 					<img class="profile-pic" src="<%= typeof profilepicId !== 'undefined' && profilepicId ? `/users/profile/profilepic/${profilepicId}` : 'https://api.adorable.io/avatars/285/abott@adorable.png'%>" alt="profile picture" >
 				</div>
-				<div class="custom-file mb-3">
+				<div class="custom-file mb-3" id="profile-pic-input">
 					<input type="file" name="profilepic" class="custom-file-input" id="pic-upload">
-					<label class="custom-file-label" for="pic-upload">Choose a profile pic</label>
+					<label class="custom-file-label color-black" for="pic-upload">Choose a profile pic</label>
 				</div>
 				<button type="submit" class="btn btn-primary btn-block">Upload</button>
 			</form>
