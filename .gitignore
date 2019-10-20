@@ -4,4 +4,4 @@ build/
 
 *.zip
 *.pdf
-*.min*
+*.min.*
