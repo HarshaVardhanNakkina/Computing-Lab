@@ -26,6 +26,6 @@ exports.js = js;
 exports.css = css;
 // exports.default = parallel(css, js);
 exports.default = function() {
-	watch('css/**/*.css',{ delay: 1000 }, css);
-	watch('js/**/*.js',{ delay0: 1000 }, js);
+	watch('css/**/*.css',{ delay: 1000, ignoreInitial: false  }, css);
+	watch('js/**/*.js',{ delay0: 1000, ignoreInitial: false }, js);
 }

@@ -124,14 +124,16 @@ const upload = multer({ storage });
 
 function deletePrevProfilePic(req, res, next){
 	const { user_id } = req.query;
-	UserDetails.findOne({_id: user_id}).then((details) => {
+	console.log(req.query);
+	UserDetails.findOne({_userId: user_id}).then((details) => {
+		console.log(details);
 		const { profilepicId } = details;
 		if(profilepicId){
 			gfs.remove({ _id: profilepicId, root: 'profilepics'}, (err, store) => {
 				next();
 			});
 		}
-	});
+	}).catch(next);
 	next();
 }
 
