@@ -53,10 +53,14 @@ $('.custom-file-input').on('change', function() {
   $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
 });
 
+$('#commaddr').change(function(event) {
+  $(this).text(event.target.value);
+});
+
 $('#copy-address').on('change', function() {
-	let isChecked = $(this).is(':checked');
+  let isChecked = $(this).is(':checked');
 	if(isChecked) {
-		let commaddr = $('#commaddr').text();
+    let commaddr = $('#commaddr').text();
 		$('#permaddr').text(commaddr);
 	}else {
 		$('#permaddr').text('');
