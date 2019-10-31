@@ -1,0 +1,110 @@
+<div class='form-shadow container col-md-9 mt-auto ml-auto mb-2 pb-2 bg-ligh rounded'>
+	<h4 class='text-center display-4 my-4'>
+		Tenant Details
+	</h4>
+	<% include ../partials/messages %>
+	<div class='update-success-fail'></div>
+	<div class='form-container container-fluid row d-flex flex-row justify-content-between flex-wrap-reverse align-content-center align-items-center'>
+		<div class='col-7 details-from flex-fill'>
+			<form action="/users/add-tenant/update?user_id=<%=typeof user_id !== 'undefined'? user_id : '12345'%>" id='tenant-details-form' class='mb-2 mr-5' method='POST'>
+				<div class='form-group'>
+					<label for='name'>Tenant's name: </label>
+					<input
+						type='text'
+						name='name'
+						id='name'
+						class='form-control'
+						placeholder="Tenant name"
+						required
+					>
+				</div>
+				<div class='form-group'>
+					<label for='fathername'>Tenant's father name: </label>
+					<input
+						type='text'
+						name='fathername'
+						id='fathername'
+						class='form-control'
+						placeholder="Tenant's father name"
+						required
+					>
+				</div>
+				<div class='form-group'>
+					<label for='mothername'>Tenant's mother name: </label>
+					<input
+						type='text'
+						name='mothername'
+						id='mothername'
+						class='form-control'
+						placeholder="Tenant's mother name"
+						required
+					>
+				</div>
+				<div class='form-group'>
+					<label for='occupation'>Tenant's occupation: </label>
+					<input
+						type='text'
+						name='occupation'
+						id='occupation'
+						class='form-control'
+						placeholder="Tenant's occupation"
+						required
+					>
+				</div>
+				<div class='form-group'>
+					<label for='permaddress'>Tenant's permanent address: </label>
+					<input
+						type='text'
+						name='permaddress'
+						id='permaddress'
+						class='form-control'
+						placeholder="Tenant's permanent address"
+						required
+					>
+				</div>
+				<div class='form-group'>
+					<label for='mobile'>Tenant's mobile number: </label>
+					<input
+						type='text'
+						name='mobile'
+						id='mobile'
+						class='form-control'
+						placeholder="Tenant's mobile number"
+						required
+					>
+				</div>
+				<div class='form-group'>
+					<label for='email'>Tenant's email: </label>
+					<input
+						type='email'
+						name='email'
+						id='email'
+						class='form-control'
+						placeholder="Tenant's email"
+						required
+					>
+				</div>
+				<div class="form-group">
+					<label for="vehicleType">Tenant's vechicle type:</label>
+					<select class="form-control" id="vehicleType">
+							<option value="" selected disabled>None</option>
+						<option value="Two wheeler">Two wheeler</option>
+						<option value="Four wheeler">Four wheeler</option>
+					</select>
+				</div>
+				<div class='form-group'>
+						<label for='vechicleRegNum'>Tenant's vehicle registration number: </label>
+						<input
+							type='text'
+							name='vechicleRegNum'
+							id='vechicleRegNum'
+							class='form-control'
+							placeholder="Tenant's vehicle registration number"
+							required
+						>
+				</div>
+				<button id="update-tenant-btn" type="submit" class="btn btn-primary btn-block">Update</button>
+			</form>
+		</div>
+	</div>
+</div>

@@ -11,6 +11,27 @@ require('./auth/passport')(passport);
 
 const app = express();
 
+// clever cloud variable
+/*
+
+MONGODB_ADDON_HOST='b5f1vd9rknve9ty-mongodb.services.clever-cloud.com'
+MONGODB_ADDON_DB='b5f1vd9rknve9ty'
+MONGODB_ADDON_USER='ufhkrll0zvfqivtdaddx'
+MONGODB_ADDON_PORT='27017'
+MONGODB_ADDON_PASSWORD='R6nalXNULMtCMIwnDOzR'
+MONGODB_ADDON_URI='mongodb://ufhkrll0zvfqivtdaddx:R6nalXNULMtCMIwnDOzR@b5f1vd9rknve9ty-mongodb.services.clever-cloud.com:27017/b5f1vd9rknve9ty'
+
+*/
+const cc = {
+	host: process.env.MONGODB_ADDON_HOST,
+	db: process.env.MONGODB_ADDON_DB,
+	user: process.env.MONGODB_ADDON_USER,
+	port : process.env.MONGODB_ADDON_POR,
+	password: process.env.MONGODB_ADDON_PASSWORD
+}
+
+const URI_CC = `mongodb://${cc.user}:${cc.password}@${cc.host}:${cc.port}/${cc.db}`
+
 // connect to mongoose
 const URI =
   process.env.DB_ENV === 'local'
@@ -22,7 +43,7 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
-mongoose.connect(URI).then((db) => {
+mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true }).then((db) => {
     console.log('MongoDB is up')
   }).catch(console.log);
 
