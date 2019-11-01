@@ -55,7 +55,7 @@
 						<a class="nav-item nav-link mr-sm-2" href="/">Home</a>
 						<a class="nav-item nav-link mr-sm-2" href="#">About</a>
 						<a class="nav-item nav-link mr-sm-2" href="#">Features</a>
-						<% if(typeof user_id !== 'undefined') { %>
+						<% if(document.cookie.length) { %>
 							<a class="nav-item nav-link mr-sm-2" href="/users/logout">Logout</a>
 							<a class="nav-item nav-link mr-sm-2" href="<%=`/users/profile/${user_id}`%>">Profile</a>
 							<a class="nav-item nav-link mr-sm-2" href="<%=`/users/tenants/${user_id}/add-tenant`%>">Add tenant</a>

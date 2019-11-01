@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
-const { check, validationResult } = require('express-validator');
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
@@ -41,21 +40,9 @@ router.get('/:id', ensureAuthenticated, (req, res, next) => {
 
 
 // update profile
-function validateDetails() {
-  return [
-    check('flatnum').trim().escape().not().isEmpty(),
-    check('name').trim().escape().not().isEmpty(),
-    check('fathername').trim().escape().not().isEmpty(),
-    check('mothename').trim().escape().not().isEmpty(),
-    check('occupation').trim().escape().not().isEmpty(),
-    check('commaddress').trim().escape().not().isEmpty(),
-    check('permaddress').trim().escape().not().isEmpty(),
-  ];
-}
 router.post('/update', ensureAuthenticated, (req, res, next) => {
   const { flatnum, name, fathername, mothername, occupation, commaddress, permaddress } = req.body;
   const { user_id } = req.query;
-  // const errors = validationResult(req);
 
   let errors = [];
   if(!escape(flatnum.trim()).length)

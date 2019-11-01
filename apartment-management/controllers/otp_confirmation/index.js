@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const ObjectId = require('mongoose').Types.ObjectId;
-const asyncHandler = require('express-async-handler');
 const otpMailHandler = require('../helpers/otpmail-handler');
 const pswdSetupMailHandler = require('./pswdsetupmail-handler');
 const invalidSoRedirect = require('../helpers/invalidsoredirect');
