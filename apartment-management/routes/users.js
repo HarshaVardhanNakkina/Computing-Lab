@@ -21,6 +21,6 @@ router.use('/pswdsetup', require('../controllers/pswd_setup'));
 
 router.use('/profile', require('../controllers/profile'));
 
-router.use('/add-tenant', require('../controllers/tenant'));
+router.use('/tenants', require('../controllers/tenant'));
 
 module.exports = router;

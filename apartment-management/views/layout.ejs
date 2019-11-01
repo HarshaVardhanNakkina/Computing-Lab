@@ -58,7 +58,8 @@
 						<% if(typeof user_id !== 'undefined') { %>
 							<a class="nav-item nav-link mr-sm-2" href="/users/logout">Logout</a>
 							<a class="nav-item nav-link mr-sm-2" href="<%=`/users/profile/${user_id}`%>">Profile</a>
-							<a class="nav-item nav-link mr-sm-2" href="<%=`/users/add-tenant/${user_id}`%>">Add tenant</a>
+							<a class="nav-item nav-link mr-sm-2" href="<%=`/users/tenants/${user_id}/add-tenant`%>">Add tenant</a>
+							<a class="nav-item nav-link mr-sm-2" href="<%=`/users/tenants/${user_id}`%>">view tenants</a>
 							<% } else { %>
 								<a class="nav-item nav-link mr-sm-2" href="/users/login">Login</a>
 								<a class="nav-item nav-link mr-sm-2" href="/users/register">Register</a>

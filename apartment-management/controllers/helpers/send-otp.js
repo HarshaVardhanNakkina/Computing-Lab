@@ -10,9 +10,9 @@ async function sendOTP(user, data) {
 	);
 
 	//! just for testing remove after testing
-	if(otp) {
-		return Promise.resolve();
-	}
+	// if(otp) {
+	// 	return Promise.resolve();
+	// }
 
 	// const request = 
 	return mailjet.post('send', { version: 'v3.1' }).request({
