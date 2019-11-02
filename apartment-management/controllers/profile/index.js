@@ -1,11 +1,12 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
-const cryptoRandomString = require('crypto-random-string');
-const path = require('path');
+const express							= require('express');
+const mongoose						= require('mongoose');
+const passport						= require('passport');
+const ObjectId						= mongoose.Types.ObjectId;
+const multer							= require('multer');
+const GridFsStorage				= require('multer-gridfs-storage');
+const Grid 								= require('gridfs-stream');
+const cryptoRandomString 	= require('crypto-random-string');
+const path 								= require('path');
 
 //* PROFILE PIC UPLOAD
 const URI = 
@@ -21,21 +22,36 @@ const { ensureAuthenticated } = require('../../auth/auth');
 
 // Models
 const UserDetails = require('../../models/UserDetails');
-const User = require('../../models/User');
-
-const router = express.Router();
+const User 				= require('../../models/User');
+const router 			= express.Router();
 
 // Get profile
-router.get('/:id', ensureAuthenticated, (req, res, next) => {
-	const { id: user_id } = req.params;
+// passport.authenticate('jwt', {session: false})
+router.get('/', (req, res, next) => {
+	console.log("GET PROFILE !!!!!!!!!");
+	// const { _id: user_id } = req.user;
+
+	res.render('profile',{
+			profilepicId: '5dac0014c65e486064de203c',
+			occupation: 'Credit Analyst',
+			_id: '5da1bf41dd67a863836eaad7',
+			_userId: '5da1be88c2fab26cb73f3381',
+			__v: 0,
+			commaddress: 'Nupur Bishnu Sood\r\n98, Chinchwad, Darjeeling - 226068',
+			fathername: 'Bishnu Sood',
+			flatnum: '98',
+			mothername: 'Nupur Sood',
+			name: 'Nupur Bishnu Sood',
+			permaddress: 'Nupur Bishnu Sood\r\n98, Chinchwad, Darjeeling - 226068'
+		})
 	
-  UserDetails.findOne({_userId: user_id}).then((details) => {
-    if(!details) {
-      res.render('profile', { user_id })
-    }else {
-      res.render('profile', { ...details._doc, user_id });
-    }
-  }).catch(next);
+  // UserDetails.findOne({_userId: user_id}).then((details) => {
+  //   if(!details) {
+	// 		res.status(401).json({message: 'Unauthorized access'})
+	// 	}else {
+  //     res.render('profile', {...details.toJSON()})
+  //   }
+  // }).catch(next);
 });
 
 

@@ -17,18 +17,19 @@ router.post('/', async (req, res, next) => {
 	passport.authenticate('login', async (err, user, info) => {
 		try {
 			if(err || !user) {
-				const error = new Error('An Error Occured')
-				return next(error);
+				console.log("USER NOT FOUND");
+				res.status(404).json(info)
 			}
 			req.login(user, { session: false }, async (error) => {
-				if(error) return next(error)
+				if(error) res.status(404).json(info)
 				
 				const body = {_id: user._id, email: user.email}
 				const token = jwt.sign({user: body}, 'hymn_for_the_weekend')
-				return res.json({ token })
+				res.cookie('jwt_cookie', token);
+				res.json({ token });
 			})
 		} catch (error) {
-			return next(error)
+			res.status(500).json(error)
 		}
 	})(req, res, next)
 })

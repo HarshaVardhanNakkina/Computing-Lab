@@ -14,18 +14,27 @@ function css() {
     .pipe(dest('static/styles'))
 }
 
-function js() {
-		return src('js/**/*.js')
+function jsDeferable() {
+		return src('js/deferable/**/*.js')
 		.pipe(babel({presets: ['@babel/env']}))
     .pipe(concat('app.min.js'))
     .pipe(uglify())
     .pipe(dest('static/js'))
 }
 
-exports.js = js;
-exports.css = css;
+function jsEssential() {
+	return src('js/essential/**/*.js')
+	.pipe(babel({presets: ['@babel/env']}))
+	.pipe(concat('essential.min.js'))
+	.pipe(uglify())
+	.pipe(dest('static/js'))
+}
+
+// exports.js = js;
+// exports.css = css;
 // exports.default = parallel(css, js);
 exports.default = function() {
 	watch('css/**/*.css',{ delay: 1000, ignoreInitial: false  }, css);
-	watch('js/**/*.js',{ delay0: 1000, ignoreInitial: false }, js);
+	watch('js/deferable/**/*.js',{ delay0: 1000, ignoreInitial: false }, jsDeferable);
+	watch('js/essential/**/*.js',{ delay0: 1000, ignoreInitial: false }, jsEssential);
 }

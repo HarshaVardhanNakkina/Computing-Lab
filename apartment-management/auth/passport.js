@@ -3,9 +3,17 @@ const mongoose			=	require('mongoose')
 const bcrypt				=	require('bcryptjs')
 const JWTStrategy		=	require('passport-jwt').Strategy
 const ExtractJWT		= require('passport-jwt').ExtractJwt
-// Load User Model
 
+// Load User Model
 const User = require('../models/User');
+
+const cookieExtractor = function(req) {
+	let token = null;
+	console.log("COOKIE EXTRACTOR");
+	const { jwt_cookie } = req.cookies;
+	if(req && req.cookies) token = jwt_cookie
+	return token
+}
 
 module.exports = function(passport) {
 	passport.use('login', new LocalStrategy({
@@ -15,7 +23,7 @@ module.exports = function(passport) {
 		console.log("ENTERED THE LOGIN");
 		const user = User.findOne({ email }).then((user) => {
 			if (!user)
-				return done(null, false, {message:'Invalid credentials', email, password})
+				return done(null, false, {message:'Invalid credentials'})
 			if (!user.verified)
 				return done(null, false, { message: 'Verify your email/mobile and set your password'})
 			bcrypt.compare(password, user.password, (err, isMatch) => {
@@ -23,11 +31,7 @@ module.exports = function(passport) {
 						if (isMatch) {
 							return done(null, user, { message: 'Logged in successfully'});
 						} else {
-							return done(null, false, {
-								message: 'Invalid credentials',
-								email,
-								password
-							});
+							return done(null, false, {message: 'Invalid credentials'});
 						}
 				});
 		})
@@ -35,13 +39,15 @@ module.exports = function(passport) {
 
 	passport.use(new JWTStrategy({
 		secretOrKey		:	'hymn_for_the_weekend',
-		jwtFromRequest:	ExtractJWT.fromAuthHeaderAsBearerToken()
-	}, async (token, done) => {
-		try {
-			return done(null,token.user)
-		} catch (error) {
-			done(error)
-		}
+		jwtFromRequest:	cookieExtractor
+	}, (token, done) => {
+		console.log("ENTERED JWT AUTH")
+		const { user } = token;
+		User.findOne({_id: user._id}).then(user => {
+			if(user)
+				return done(null, {_id: user._id})
+			return done(null, false);
+		}).catch(err => done(err))
 	}))
 	// passport.use(
 	// 	new LocalStrategy(

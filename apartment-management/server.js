@@ -1,10 +1,11 @@
-const express = require('express');
-const compression= require('compression');
-const expressLayouts = require('express-ejs-layouts');
-const mongoose = require('mongoose');
-const flash = require('connect-flash');
-const session = require('express-session');
-const passport = require('passport');
+const express 				= require('express');
+const compression 		= require('compression');
+const expressLayouts 	= require('express-ejs-layouts');
+const mongoose 				= require('mongoose');
+const flash 					= require('connect-flash');
+const session 				= require('express-session');
+const passport 				= require('passport');
+const cookieParser		= require('cookie-parser');
 
 // Passport config
 require('./auth/passport')(passport);
@@ -58,29 +59,34 @@ app.use(compression());
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-// Express Session middleware
-app.use(
-	session({
-		secret: 'secret',
-		resave: true,
-		saveUninitialized: true
-	})
-);
-
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
+// cookie parser
+app.use(cookieParser());
+
+
+// Express Session middleware
+// app.use(
+// 	session({
+// 		secret: 'secret',
+// 		resave: true,
+// 		saveUninitialized: true
+// 	})
+// );
+
+
 // Connect flash
-app.use(flash());
+// app.use(flash());
 
 // Global Variables
-app.use((req, res, next) => {
-	res.locals.success_msg = req.flash('success_msg');
-	res.locals.error_msg = req.flash('error_msg');
-	res.locals.error = req.flash('error');
-	next();
-});
+// app.use((req, res, next) => {
+// 	res.locals.success_msg = req.flash('success_msg');
+// 	res.locals.error_msg = req.flash('error_msg');
+// 	res.locals.error = req.flash('error');
+// 	next();
+// });
 
 // Static files css, js etc...
 app.use(express.static('static', { cacheControl: true, maxAge: '1d' }));
