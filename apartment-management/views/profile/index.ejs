@@ -1,8 +1,8 @@
 <div class="profile-container">
 	<div class="all-details bg-light">
 		<div class="essent-details">
-			<div class="profile-pic">
-				<img src="<%= typeof profilepicId === 'undefined' && profilepicId ? `/users/profile/profilepic/${profilepicId}` : 'https://i.pravatar.cc/'%>" alt="profile picture" >
+			<div class="profile-pic-card">
+				<img class="profile-pic" src="/users/profile/profilepic" alt="profile picture" >
 			</div>
 			<ul class="profile-details">
 				<li class="detail">
@@ -42,6 +42,9 @@
 		</div>
 		<div class="proof-details">
 			
+		</div>
+		<div class="edit-profile-btn">
+			<a href="/users/profile/edit" class="edit-profile-btn"><button type="button" class="btn btn-primary btn-block">Edit</button></a>
 		</div>
 	</div>
 </div>
