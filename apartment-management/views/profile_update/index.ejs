@@ -11,7 +11,7 @@
 			<form
 				id="profile-details-form"
 				class="mb-2 mr-5"
-				action="/users/profile/update?user_id=<%=typeof user_id !== 'undefined'? user_id : '12345'%>"
+				action="/users/profile/update"
 				method="POST"
 			>
 				<div class="form-group">
@@ -102,8 +102,8 @@
 			</form>
 		</div>
 		<div class="col-5 pics-form flex-fill">
-			<div class="card card-body mb-3 p-2">
-				<img class="profile-pic" src="<%= typeof profilepicId !== 'undefined' && profilepicId ? `/users/profile/profilepic/${profilepicId}` : 'https://api.adorable.io/avatars/285/abott@adorable.png'%>" alt="profile picture" >
+			<div class="card card-body mb-3 p-2 profile-pic-card">
+				<img class="profile-pic" src="/users/profile/profilepic" alt="profile picture" >
 			</div>
 			<form class="mb-2" action="/users/profile/profile-pic-upload" method="POST" enctype="multipart/form-data">
 				<div class="custom-file mb-3" id="profile-pic-input">

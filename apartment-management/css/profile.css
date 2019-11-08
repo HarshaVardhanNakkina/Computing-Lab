@@ -3,18 +3,21 @@
 }
 .profile-pic {
 	width: 100%;
-}
+}*/
 @media screen and (max-width: 1024px) {
 	.forms-container {
 		margin: 0 !important;
 	}
-	.details-form, .pics-form {
+	.details-form, .profile-details-form, .pics-form {
 		max-width: 100% !important;
 	}
 	.details-form form {
 		margin: 0 !important;
 	}
-} */
+	.profile-details-form form {
+		margin: 0 !important;
+	}
+}
 ul {
 	list-style: none;
 	margin: 0;
@@ -39,8 +42,10 @@ ul {
 	align-items: center;
 	flex-wrap: wrap;
 }
-.profile-pic {
+.profile-pic-card {
 	width: 160px;
+	height: 160px;
+	text-align: center;
 }
 .profile-pic img{
 	width: 100%;
@@ -64,5 +69,4 @@ ul {
 	list-style: none;
 	display: flex;
 	flex-direction: column;
-
 }

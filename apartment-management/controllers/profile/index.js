@@ -59,16 +59,18 @@ router.get('/', (req, res, next) => {
 router.get('/edit', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 	const { _id: user_id } = req.user;
 	User.findOne({_id: user_id}).then((user) => {
-		
+		if(!user) {
+			res.render('profile_update')
+		}
+		UserDetails.findOne({_userId: user_id}).then((details) => {
+			if(!details) {
+				// res.status(401).json({message: 'Unauthorized access'})
+				res.render('profile_update')
+			}else {
+				res.render('profile_update', {...details.toJSON()})
+			}
+		}).catch(next);
 	})
-	UserDetails.findOne({_userId: user_id}).then((details) => {
-    if(!details) {
-			res.status(401).json({message: 'Unauthorized access'})
-		}else {
-      res.render('profile', {...details.toJSON()})
-    }
-  }).catch(next);
-	res.render('profile_update')
 })
 
 // update profile
@@ -149,23 +151,27 @@ function deletePrevProfilePic(req, res, next){
 			const { profilepicId } = details;
 			if(profilepicId){
 				gfs.remove({ _id: profilepicId, root: 'profilepics'}, (err, store) => {
-					throw err
+					console.log(err);
 				});
 			}
 		}
-		next();
 	}).catch(next);
 	next();
 }
 
 router.post('/profile-pic-upload', passport.authenticate('jwt', {session: false}), deletePrevProfilePic, (req, res, next) => {
-	// console.log("HELL YEAH UPLOAD");
+	console.log("HELL YEAH UPLOAD");
 	const { _id: user_id } = req.user;
-	upload.single('profilepic')(req, res, (err)=>{
+	upload.single('profilepic')(req, res, function(err, file){
 		if(err) throw err;
+		let fileData;
+		if(file) fileData = file
+		else {
+			fileData = req.file
+		}
 		UserDetails.findOneAndUpdate(
 				{ _userId: ObjectId(user_id) },
-				{ profilepicId: ObjectId(file.id) },
+				{ profilepicId: ObjectId(fileData.id) },
 				{ new:true, upsert: true }
 			).then(newDetails => {
 				res.redirect(`/users/profile/edit`)
@@ -174,16 +180,25 @@ router.post('/profile-pic-upload', passport.authenticate('jwt', {session: false}
 });
 
 router.get('/profilepic', passport.authenticate('jwt', {session: false, parseReqBody: false}), (req, res, next) => {
-	// console.log("HELL YEAH PROFILE PIC");
-	const { _id: id } = req.user;
-	gfs.files.findOne({ _id: ObjectId(id) }, (err, file) => {
-		if (err) next(err);
-		if(!file) res.send(null);
-		else {
-			const readStream = gfs.createReadStream(file.filename);
-			readStream.pipe(res);
+	console.log("HELL YEAH PROFILE PIC");
+	const { _id: user_id } = req.user;
+	UserDetails.findOne({_userId: user_id}).then(userData => {
+		console.log(userData);
+		if(!userData) {
+			res.sendFile('C:/Users/CSE/coding/Computing-Lab/apartment-management/static/img/abott@adorable.io.png')
 		}
-	});
+		const { profilepicId } = userData
+		gfs.files.findOne({ _id: profilepicId }, (err, file) => {
+			if (err) next(err);
+			if(!file) {
+				res.sendFile('C:/Users/CSE/coding/Computing-Lab/apartment-management/static/img/abott@adorable.io.png')
+			}
+			else {
+				const readStream = gfs.createReadStream(file.filename);
+				readStream.pipe(res);
+			}
+		});
+	})
 });
 
 module.exports = router;
