@@ -9,7 +9,7 @@ const User = require('../models/User');
 
 const cookieExtractor = function(req) {
 	let token = null;
-	console.log("COOKIE EXTRACTOR");
+	// console.log("COOKIE EXTRACTOR");
 	const { jwt_cookie } = req.cookies;
 	if(req && req.cookies) token = jwt_cookie
 	return token
@@ -20,7 +20,7 @@ module.exports = function(passport) {
 		usernameField: 'email',
 		passwordField: 'password'
 	}, (email, password, done) => {
-		console.log("ENTERED THE LOGIN");
+		// console.log("ENTERED THE LOGIN");
 		const user = User.findOne({ email }).then((user) => {
 			if (!user)
 				return done(null, false, {message:'Invalid credentials'})
@@ -41,7 +41,7 @@ module.exports = function(passport) {
 		secretOrKey		:	'hymn_for_the_weekend',
 		jwtFromRequest:	cookieExtractor
 	}, (token, done) => {
-		console.log("ENTERED JWT AUTH")
+		// console.log("ENTERED JWT AUTH")
 		const { user } = token;
 		User.findOne({_id: user._id}).then(user => {
 			if(user)
