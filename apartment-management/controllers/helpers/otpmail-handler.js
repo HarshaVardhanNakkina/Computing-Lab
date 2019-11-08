@@ -15,8 +15,9 @@ module.exports = function otpMailHandler(user, req, res) {
 			console.log('verification mail has been sent');
 			data.otpSent = true;
 			data.save().then(()=>{
-				req.flash('success_msg', 'A mail with OTP will be sent for verification');
-				res.redirect(`/users/confirmotp/${user._id}`);
+				res.status(200).json({_userId: user._id})
+				// req.flash('success_msg', 'A mail with OTP will be sent for verification');
+				// res.redirect(`/users/confirmotp/${user._id}`);
 			}).catch(console.log);
 		}).catch(console.log);
 	}).catch(console.log);

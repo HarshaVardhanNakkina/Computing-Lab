@@ -10,7 +10,6 @@ router.get('/', (req, res) => res.render('register'));
 
 // Register Handler
 router.post('/', (req, res, next) => {
-
 	const { doornum, email, mobile } = req.body;
 	let errors = [];
 
@@ -26,7 +25,7 @@ router.post('/', (req, res, next) => {
 		errors.push({ msg: 'Enter a valid mobile number' });
 
 	if (errors.length > 0) {
-		res.render('register', {
+		res.status(400).render('register', {
 			errors,
 			doornum,
 			email,
@@ -38,7 +37,7 @@ router.post('/', (req, res, next) => {
 			if (user) {
 				// Door no. already registered
 				errors.push({ msg: 'Door number is already registered' });
-				res.render('register', {
+				res.status(400).render('register', {
 					errors,
 					doornum,
 					email,

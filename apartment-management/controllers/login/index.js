@@ -6,7 +6,17 @@ const jwt				= require('jsonwebtoken')
 // Login Page
 function checkBeforeRendering(req, res, next) {
   if (req.isAuthenticated()) next();
-  else res.render('login');
+  else {
+		const { msg } = req.query;
+		if(msg){
+			console.log(msg)
+			res.status(200).render('login', {
+				success_msg: 'Password is created, you can login'
+			});
+		}
+		else
+			res.status(200).render('login')
+	}
 }
 router.get('/', checkBeforeRendering, (req, res) => {
   res.redirect('/');
@@ -23,10 +33,12 @@ router.post('/', async (req, res, next) => {
 			req.login(user, { session: false }, async (error) => {
 				if(error) res.status(404).json(info)
 				
+				console.log(user)
 				const body = {_id: user._id, email: user.email}
+				const {firstTimeLogin} = user
 				const token = jwt.sign({user: body}, 'hymn_for_the_weekend')
-				res.cookie('jwt_cookie', token);
-				res.json({ token });
+				res.cookie('jwt_cookie', token)
+				res.json({ token, firstTimeLogin })
 			})
 		} catch (error) {
 			res.status(500).json(error)

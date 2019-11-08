@@ -76,11 +76,11 @@ router.post('/', (req, res, next) => {
 								];
 								
 								Promise.all(promises).then(() => {
-									req.flash(
-										'success_msg',
-										'Password is created, you can login'
-									);
-									res.redirect('/users/login');
+									// req.flash(
+									// 	'success_msg',
+									// 	'Password is created, you can login'
+									// );
+									res.redirect('/users/login?msg=reg_redirect');
 								}).catch(console.log);
 							})
 						);

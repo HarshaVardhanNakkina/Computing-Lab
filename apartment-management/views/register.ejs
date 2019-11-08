@@ -4,8 +4,9 @@
 			<h1 class="text-center mb-3">
 				<i class="fas fa-user-plus"></i> Register
 			</h1>
-			<%# include ./partials/messages %>
-			<form action="/users/register" method="POST">
+			<% include ./partials/messages %>
+			<div class="update-success-fail"></div>
+			<form action="/users/register" id='register-form' method="POST">
 				<div class="form-group">
 					<label for="doornum">Door number (e.g. "1-N-12-799/29")</label>
 					<input
@@ -66,7 +67,7 @@
             required
 					/>
 				</div> -->
-				<button type="submit" class="btn btn-primary btn-block">
+				<button type="submit" id='register-btn' class="btn btn-primary btn-block">
 					Register
 				</button>
 			</form>

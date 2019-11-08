@@ -1,12 +1,17 @@
-const express							= require('express');
-const mongoose						= require('mongoose');
-const passport						= require('passport');
-const ObjectId						= mongoose.Types.ObjectId;
-const multer							= require('multer');
-const GridFsStorage				= require('multer-gridfs-storage');
-const Grid 								= require('gridfs-stream');
-const cryptoRandomString 	= require('crypto-random-string');
-const path 								= require('path');
+const express							= require('express')
+const mongoose						= require('mongoose')
+const passport						= require('passport')
+const ObjectId						= mongoose.Types.ObjectId
+const multer							= require('multer')
+const GridFsStorage				= require('multer-gridfs-storage')
+const Grid 								= require('gridfs-stream')
+const cryptoRandomString 	= require('crypto-random-string')
+const path 								= require('path')
+
+// Models
+const UserDetails 				= require('../../models/UserDetails')
+const User 								= require('../../models/User')
+const router 							= express.Router()
 
 //* PROFILE PIC UPLOAD
 const URI = 
@@ -20,10 +25,6 @@ mongoose.set('useUnifiedTopology', true);
 const connection = mongoose.createConnection(URI);
 const { ensureAuthenticated } = require('../../auth/auth');
 
-// Models
-const UserDetails = require('../../models/UserDetails');
-const User 				= require('../../models/User');
-const router 			= express.Router();
 
 // Get profile
 // passport.authenticate('jwt', {session: false})
@@ -54,9 +55,24 @@ router.get('/', (req, res, next) => {
   // }).catch(next);
 });
 
+// Edit profile
+router.get('/edit', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+	const { _id: user_id } = req.user;
+	User.findOne({_id: user_id}).then((user) => {
+		
+	})
+	UserDetails.findOne({_userId: user_id}).then((details) => {
+    if(!details) {
+			res.status(401).json({message: 'Unauthorized access'})
+		}else {
+      res.render('profile', {...details.toJSON()})
+    }
+  }).catch(next);
+	res.render('profile_update')
+})
 
 // update profile
-router.post('/update', ensureAuthenticated, (req, res, next) => {
+router.post('/update', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   const { flatnum, name, fathername, mothername, occupation, commaddress, permaddress } = req.body;
   const { user_id } = req.query;
 
@@ -85,8 +101,8 @@ router.post('/update', ensureAuthenticated, (req, res, next) => {
 		UserDetails.findOneAndUpdate({ _userId: user_id }, userDet, {new: true, upsert: true}).then((newDetails) => {
 			// console.log(newDetails);
 			User.findOneAndUpdate({_id: user_id}, {detailsGiven: true, firstTimeLogin: false}).then((updatedUser) => {
-				req.flash('success_msg', 'profile is updated')
-				req.flash('user_id', user_id);
+				// req.flash('success_msg', 'profile is updated')
+				// req.flash('user_id', user_id);
 				res.redirect(`/users/profile/${user_id}`);
 			}).catch(next);
 		}).catch(next);
@@ -106,7 +122,7 @@ const storage = new GridFsStorage({
 	url: URI,
 	file: (req, file) => {
 		return new Promise((resolve, reject) => {
-			const { user_id } = req.query;
+			const { _id: user_id } = req.user;
 			User.findOne({ _id: ObjectId(user_id) }).then((user) => {
 				if(!user) reject(new Error({message: 'User does not exist'}));
 				else {
@@ -126,37 +142,40 @@ const storage = new GridFsStorage({
 const upload = multer({ storage });
 
 function deletePrevProfilePic(req, res, next){
-	const { user_id } = req.query;
-	console.log(req.query);
+	console.log("YAY DELETING PREVIOUS PROFILE PIC")
+	const { _id:user_id } = req.user
 	UserDetails.findOne({_userId: user_id}).then((details) => {
-		console.log(details);
-		const { profilepicId } = details;
-		if(profilepicId){
-			gfs.remove({ _id: profilepicId, root: 'profilepics'}, (err, store) => {
-				next();
-			});
+		if(details) {
+			const { profilepicId } = details;
+			if(profilepicId){
+				gfs.remove({ _id: profilepicId, root: 'profilepics'}, (err, store) => {
+					throw err
+				});
+			}
 		}
+		next();
 	}).catch(next);
 	next();
 }
 
-router.post('/upload', deletePrevProfilePic, upload.single('profilepic'), (req, res, next) => {
+router.post('/profile-pic-upload', passport.authenticate('jwt', {session: false}), deletePrevProfilePic, (req, res, next) => {
 	// console.log("HELL YEAH UPLOAD");
-	const { user_id } = req.query;
-	const { file } = req;
-	UserDetails.findOneAndUpdate(
-			{ _userId: ObjectId(user_id) },
-			{ profilepicId: ObjectId(file.id) },
-			{ new:true, upsert: true }
-		).then(newDetails => {
-			req.flash('success_msg', 'profile pic is updated');
-			res.redirect(`/users/profile/${user_id}`)
-	}).catch(next);
+	const { _id: user_id } = req.user;
+	upload.single('profilepic')(req, res, (err)=>{
+		if(err) throw err;
+		UserDetails.findOneAndUpdate(
+				{ _userId: ObjectId(user_id) },
+				{ profilepicId: ObjectId(file.id) },
+				{ new:true, upsert: true }
+			).then(newDetails => {
+				res.redirect(`/users/profile/edit`)
+		}).catch(next);
+	})
 });
 
-router.get('/profilepic/:id', (req, res, next) => {
+router.get('/profilepic', passport.authenticate('jwt', {session: false, parseReqBody: false}), (req, res, next) => {
 	// console.log("HELL YEAH PROFILE PIC");
-	const { id } = req.params;
+	const { _id: id } = req.user;
 	gfs.files.findOne({ _id: ObjectId(id) }, (err, file) => {
 		if (err) next(err);
 		if(!file) res.send(null);

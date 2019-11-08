@@ -89,7 +89,7 @@ app.use(cookieParser());
 // });
 
 // Static files css, js etc...
-app.use(express.static('static', { cacheControl: true, maxAge: '1d' }));
+app.use(express.static('static', { cacheControl: true, maxAge: 31536000 }));
 
 //Routes
 app.use('/', require('./routes/index'));

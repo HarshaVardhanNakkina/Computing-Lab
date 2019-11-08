@@ -8,12 +8,16 @@ $('#login-form').submit(function(event){
 	},{})
 	const url = $(this).attr('action')
 	$.post(url, formData, function(data){
+		const { firstTimeLogin } = data;
+		console.log(firstTimeLogin)
+		if (firstTimeLogin){
+			window.location.replace(window.location.origin+`/users/profile/edit`)	
+		}else
+			window.location.replace(window.location.origin)
 		// let date = new Date();
 		// date.setTime(date.getTime() + (3*24*60*60*1000));
 		// var expires = "expires="+ date.toUTCString();
 		// document.cookie = `token=${data.token};expires=${expires};path=/`
-	}).done(() => {
-		window.location.replace(window.location.origin)
 	})
 	.fail((res) => {
 		const { responseJSON } =  res;
