@@ -28,31 +28,31 @@ const { ensureAuthenticated } = require('../../auth/auth');
 
 // Get profile
 // passport.authenticate('jwt', {session: false})
-router.get('/', (req, res, next) => {
-	console.log("GET PROFILE !!!!!!!!!");
-	// const { _id: user_id } = req.user;
+router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+	// console.log("GET PROFILE !!!!!!!!!");
+	const { _id: user_id } = req.user;
 
-	res.render('profile',{
-			profilepicId: '5dac0014c65e486064de203c',
-			occupation: 'Credit Analyst',
-			_id: '5da1bf41dd67a863836eaad7',
-			_userId: '5da1be88c2fab26cb73f3381',
-			__v: 0,
-			commaddress: 'Nupur Bishnu Sood\r\n98, Chinchwad, Darjeeling - 226068',
-			fathername: 'Bishnu Sood',
-			flatnum: '98',
-			mothername: 'Nupur Sood',
-			name: 'Nupur Bishnu Sood',
-			permaddress: 'Nupur Bishnu Sood\r\n98, Chinchwad, Darjeeling - 226068'
-		})
+	// res.render('profile',{
+	// 		profilepicId: '5dac0014c65e486064de203c',
+	// 		occupation: 'Credit Analyst',
+	// 		_id: '5da1bf41dd67a863836eaad7',
+	// 		_userId: '5da1be88c2fab26cb73f3381',
+	// 		__v: 0,
+	// 		commaddress: 'Nupur Bishnu Sood\r\n98, Chinchwad, Darjeeling - 226068',
+	// 		fathername: 'Bishnu Sood',
+	// 		flatnum: '98',
+	// 		mothername: 'Nupur Sood',
+	// 		name: 'Nupur Bishnu Sood',
+	// 		permaddress: 'Nupur Bishnu Sood\r\n98, Chinchwad, Darjeeling - 226068'
+	// 	})
 	
-  // UserDetails.findOne({_userId: user_id}).then((details) => {
-  //   if(!details) {
-	// 		res.status(401).json({message: 'Unauthorized access'})
-	// 	}else {
-  //     res.render('profile', {...details.toJSON()})
-  //   }
-  // }).catch(next);
+  UserDetails.findOne({_userId: user_id}).then((details) => {
+    if(!details) {
+			res.status(401).json({message: 'Unauthorized access'})
+		}else {
+      res.render('profile', {...details.toJSON()})
+    }
+  }).catch(next);
 });
 
 // Edit profile
@@ -77,7 +77,7 @@ router.get('/edit', passport.authenticate('jwt', {session: false}), (req, res, n
 // update profile
 router.post('/update', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   const { flatnum, name, fathername, mothername, occupation, commaddress, permaddress } = req.body;
-  const { user_id } = req.query;
+  const { _id: user_id } = req.user;
 
   let errors = [];
   if(!escape(flatnum.trim()).length)
@@ -95,7 +95,7 @@ router.post('/update', passport.authenticate('jwt', {session: false}), (req, res
 
 
   if(errors.length) {
-    res.status(422).render('profile', 
+    res.status(422).render('profile_update', 
       {errors, ...req.body}
     );
   }else {
@@ -106,15 +106,14 @@ router.post('/update', passport.authenticate('jwt', {session: false}), (req, res
 			User.findOneAndUpdate({_id: user_id}, {detailsGiven: true, firstTimeLogin: false}).then((updatedUser) => {
 				// req.flash('success_msg', 'profile is updated')
 				// req.flash('user_id', user_id);
-				res.redirect(`/users/profile/${user_id}`);
+				res.status(200).json({message: 'profile update is successful'});
 			}).catch(next);
 		}).catch(next);
   }
   
 });
 
-//* Upload, upate, delete profile pics...
-
+//TODO: Upload, upate, delete profile pics...
 let gfs;
 connection.once('open', () => {
 	gfs = Grid(connection.db, mongoose.mongo);
@@ -145,10 +144,10 @@ const storage = new GridFsStorage({
 const upload = multer({ storage });
 
 function deletePrevProfilePic(req, res, next){
-	console.log("YAY DELETING PREVIOUS PROFILE PIC")
+	// console.log("YAY DELETING PREVIOUS PROFILE PIC")
 	const { _id:user_id } = req.user
 	UserDetails.findOne({_userId: user_id}).then((details) => {
-		if(details) {
+		if(details && details !== undefined) {
 			const { profilepicId } = details;
 			if(profilepicId){
 				gfs.remove({ _id: profilepicId, root: 'profilepics'}, (err, store) => {
@@ -161,7 +160,7 @@ function deletePrevProfilePic(req, res, next){
 }
 
 router.post('/profile-pic-upload', passport.authenticate('jwt', {session: false}), deletePrevProfilePic, (req, res, next) => {
-	console.log("HELL YEAH UPLOAD");
+	// console.log("HELL YEAH UPLOAD");
 	const { _id: user_id } = req.user;
 	upload.single('profilepic')(req, res, function(err, file){
 		if(err) throw err;
@@ -181,10 +180,10 @@ router.post('/profile-pic-upload', passport.authenticate('jwt', {session: false}
 });
 
 router.get('/profilepic', passport.authenticate('jwt', {session: false, parseReqBody: false}), (req, res, next) => {
-	console.log("HELL YEAH PROFILE PIC");
+	// console.log("HELL YEAH PROFILE PIC");
 	const { _id: user_id } = req.user;
 	UserDetails.findOne({_userId: user_id}).then(userData => {
-		console.log(userData);
+		// console.log(userData);
 		if(!userData) {
 			res.sendFile('C:/Users/CSE/coding/Computing-Lab/apartment-management/static/img/abott@adorable.io.png')
 		}

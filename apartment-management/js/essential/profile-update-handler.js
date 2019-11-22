@@ -10,8 +10,8 @@ $('#profile-details-form').submit(function(event) {
 		return {...acc,  [cur.name]: cur.value };
 	},{});
 	
-	$.post(url,  updatedProfile , function(){}).done(() => {
-		console.log('profile updated');
+	$.post(url,  updatedProfile , function(){}).done((data) => {
+		console.log('profile updated', data);
 		$('.update-success-fail').append(
 			`
 				<div class='alert alert-success alert-dismissible text-center fade show' role='alert'>
