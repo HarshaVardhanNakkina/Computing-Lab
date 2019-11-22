@@ -23,4 +23,6 @@ router.use('/profile', require('../controllers/profile'));
 
 router.use('/tenants', require('../controllers/tenant'));
 
+router.use('/treasurer', require('../controllers/treasurer'))
+
 module.exports = router;

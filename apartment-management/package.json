@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "server.js",
 	"scripts": {
-		"start": "node server.js",
+		"start": "concurrently \"npm run dev\" \"npm run gulp\"",
 		"dev": "nodemon -r dotenv/config server.js",
 		"gulp": "gulp"
 	},
@@ -14,6 +14,7 @@
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
 		"compression": "^1.7.4",
+		"concurrently": "^5.0.0",
 		"connect-flash": "^0.1.1",
 		"cookie-parser": "^1.4.4",
 		"crypto-random-string": "^3.0.1",
