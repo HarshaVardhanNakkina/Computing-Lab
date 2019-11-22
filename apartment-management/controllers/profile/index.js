@@ -58,6 +58,7 @@ router.get('/', (req, res, next) => {
 // Edit profile
 router.get('/edit', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 	const { _id: user_id } = req.user;
+	//user = {name: }
 	User.findOne({_id: user_id}).then((user) => {
 		if(!user) {
 			res.render('profile_update')

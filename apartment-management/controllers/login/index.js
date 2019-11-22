@@ -3,6 +3,8 @@ const router		= express.Router()
 const passport	= require('passport')
 const jwt				= require('jsonwebtoken')
 
+//router.use('/secretary', require('../../controllers/Secretary/approve'));
+
 // Login Page
 function checkBeforeRendering(req, res, next) {
   if (req.isAuthenticated()) next();

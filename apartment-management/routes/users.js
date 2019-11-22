@@ -3,6 +3,10 @@ const router = express.Router();
 
 // User model
 const User = require('../models/User');
+const Secretaryschema = require('../models/SecretaryDetails/SecretarySchema')
+const Dues = require('../models/SecretaryDetails/Dues')
+const Complaint = require('../models/SecretaryDetails/complaint')
+const Employee = require('../models/SecretaryDetails/employees')
 
 // Login controller
 router.use('/login', require('../controllers/login'));
@@ -22,5 +26,6 @@ router.use('/pswdsetup', require('../controllers/pswd_setup'));
 router.use('/profile', require('../controllers/profile'));
 
 router.use('/tenants', require('../controllers/tenant'));
+
 
 module.exports = router;
