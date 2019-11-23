@@ -31,6 +31,10 @@ const UserSchema = new mongoose.Schema({
 	detailsGiven: {
 		type: Boolean,
 		default: false
+	},
+	role :{
+		type: String,
+		default : "0"
 	}
 });
 

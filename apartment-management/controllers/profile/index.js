@@ -47,17 +47,40 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next)
 	// 	})
 	
   UserDetails.findOne({_userId: user_id}).then((details) => {
-    if(!details) {
-			res.status(401).json({message: 'Unauthorized access'})
-		}else {
-      res.render('profile', {...details.toJSON()})
-    }
+	if(!details) {
+		res.status(401).json({message: 'Unauthorized access'})
+	}else {
+  	//res.render('profile', {...details.toJSON()})
+	
+	User.findOne({_id : user_id}).then((det)=>{
+		const role = det.role;
+		if(role==="1"){
+			res.status(200).render('president');
+		}
+		else if(role ==="2"){
+			res.status(200).render('secretary');
+		}
+		else if(role === "3"){
+			res.status(200).render('treasurer');
+		}
+		else if(role==="4") {
+			res.status(200).render('office');
+		}
+		else{
+			res.status(200).render('profile',{...details.toJSON()});
+		}
+	})
+	.catch(err=>{
+		console.log(err)
+	})
+	}
   }).catch(next);
 });
 
 // Edit profile
 router.get('/edit', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 	const { _id: user_id } = req.user;
+	//user = {name: }
 	User.findOne({_id: user_id}).then((user) => {
 		if(!user) {
 			res.render('profile_update')

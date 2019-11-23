@@ -3,6 +3,8 @@ const router		= express.Router()
 const passport	= require('passport')
 const jwt				= require('jsonwebtoken')
 
+//router.use('/secretary', require('../../controllers/Secretary/approve'));
+
 // Login Page
 function checkBeforeRendering(req, res, next) {
   if (req.isAuthenticated()) next();
@@ -20,6 +22,7 @@ function checkBeforeRendering(req, res, next) {
 }
 router.get('/', checkBeforeRendering, (req, res) => {
   res.redirect('/');
+
 });
 
 // Login Handler
@@ -39,12 +42,15 @@ router.post('/', async (req, res, next) => {
 				const token = jwt.sign({user: body}, 'hymn_for_the_weekend')
 				res.cookie('jwt_cookie', token)
 				res.json({ token, firstTimeLogin })
+			
 			})
 		} catch (error) {
 			res.status(500).json(error)
 		}
 	})(req, res, next)
 })
+
+
 // router.post('/', passport.authenticate('local', {
 //     failureRedirect: '/users/login',
 //     failureFlash: true
