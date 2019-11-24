@@ -223,4 +223,24 @@ router.get('/profilepic', passport.authenticate('jwt', {session: false, parseReq
 	})
 });
 
+router.get('/profilepic/:user_id', passport.authenticate('jwt', {session: false, parseReqBody: false}), (req, res, next) => {
+	const { user_id } = req.params;
+	UserDetails.findOne({_userId: ObjectId(user_id)}).then(userData => {
+		if(!userData) {
+			res.sendFile('/img/abott@adorable.io.png', {root: 'static'})
+		}
+		const { profilepicId } = userData
+		gfs.files.findOne({ _id: ObjectId(profilepicId) }, (err, file) => {
+			if (err) next(err);
+			if(!file) {
+				res.sendFile('/img/abott@adorable.io.png', {root: 'static'})
+			}
+			else {
+				const readStream = gfs.createReadStream(file.filename);
+				readStream.pipe(res);
+			}
+		});
+	})
+});
+
 module.exports = router;
