@@ -61,7 +61,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next)
 			res.status(200).render('secretary');
 		}
 		else if(role === "3"){
-			res.status(200).render('treasurer');
+			res.status(200).redirect('/users/treasurer');
 		}
 		else if(role==="4") {
 			res.status(200).render('office');
@@ -207,13 +207,13 @@ router.get('/profilepic', passport.authenticate('jwt', {session: false, parseReq
 	UserDetails.findOne({_userId: user_id}).then(userData => {
 		// console.log(userData);
 		if(!userData) {
-			res.sendFile('C:/Users/CSE/coding/Computing-Lab/apartment-management/static/img/abott@adorable.io.png')
+			res.sendFile('/img/abott@adorable.io.png', {root: 'static'})
 		}
 		const { profilepicId } = userData
 		gfs.files.findOne({ _id: profilepicId }, (err, file) => {
 			if (err) next(err);
 			if(!file) {
-				res.sendFile('C:/Users/CSE/coding/Computing-Lab/apartment-management/static/img/abott@adorable.io.png')
+				res.sendFile('/img/abott@adorable.io.png', {root: 'static'})
 			}
 			else {
 				const readStream = gfs.createReadStream(file.filename);

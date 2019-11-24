@@ -43,9 +43,8 @@ router.post('/', (req, res, next) => {
 					email,
 					mobile
 				});
-			} 
-			else {
-				
+			}
+			else {	
 				const newUser = new User({ doornum, email, mobile });
 				newUser.save()
 					.then(user => otpMailHandler(user, req, res))
