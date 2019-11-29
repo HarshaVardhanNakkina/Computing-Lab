@@ -12,7 +12,7 @@ const PaymentSchema 	= new mongoose.Schema({
 		required 		: true
 	},
 	madeBy: {
-		ownerName: {
+		name: {
 			type			: String,
 			required	: true
 		},

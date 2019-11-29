@@ -8,6 +8,10 @@
 					<li class="detail">
 						<h4><%=typeof name !== 'undefined' ? name : '' %></h4>
 					</li>
+					<!-- <li class="detail hidden">
+						<b><i>Id : </i></b>
+						<%=typeof _userId !== 'undefined' ? _userId : '' %>
+					</li> -->
 					<li class="detail">
 						<!-- <i class="fa fa-building" aria-hidden="true"></i> -->
 						<b><i>Flat : </i></b>
@@ -40,8 +44,9 @@
 					</li>
 				</ul>
 			</div>
-			<div class="proof-details">
-				
+			<button id="create-payment-rec-btn" class="my-2 btn btn-primary align-right" data-id="<%=typeof _userId !== 'undefined' ? _userId : '' %>">Create payment record</button>
+			<div class="payment-record-details hidden">
+					<%- include('./payment_record.ejs',{_userId}) %>
 			</div>
 		</div>
 	</div>

@@ -1,0 +1,49 @@
+<div
+	class="form-shadow container-fluid mt-auto ml-auto mb-2 pb-2 bg-light rounded"
+>
+	<% include ../partials/messages %>
+	<div class="update-success-fail"></div>
+  <div id="payment-rec-container" class="forms-container container-fluid row d-flex flex-row justify-content-between flex-wrap-reverse align-content-center align-items-center">
+		<div class="details-form flex-fill">
+			<form
+				id="create-payment-rec-form"
+				class="mb-2"
+				action="/users/treasurer/create-payment-record/<%= typeof _userId !== 'undefined' ? _userId: ''%>"
+				method="POST"
+			>
+				<div class="form-group">
+					<input type="hidden" name="_userId" value="<%= typeof _userId !== 'undefined' ? _userId: ''%>"/>
+						<label for="vehicleType">Payment type:</label>
+						<select class="form-control" name="paymentType" id="vehicleType">
+								<option value="Monthly Maintenance" selected>Monthly Maintenance</option>
+							<option value="One time membership">One time membership</option>
+							<option value="One time deposit">One time deposit</option>
+						</select>
+				</div>
+				<div class="form-group">
+					<label for="flatnum">Mode of payment</label>
+					<input
+						type="text"
+						id="mode"
+						name="mode"
+						class="form-control"
+						placeholder="Mode of payment"
+						required
+					/>
+				</div>
+				<div class="form-group">
+						<label for="flatnum">Amount:</label>
+						<input
+							type="number"
+							id="amount"
+							name="amount"
+							class="form-control"
+							placeholder="Amount"
+							required
+						/>
+				</div>
+				<button id="submit-payment-rec-btn" type="submit" class="btn btn-primary btn-block">Create</button>
+			</form>
+		</div>
+	</div>
+</div>
