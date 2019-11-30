@@ -1,0 +1,13 @@
+<div class="container-fluid treasurer-profile my-5">
+	<% include ../partials/treasurer_menu %>
+	<div class="view-payment-details">
+		<%#JSON.stringify(payments)%>
+		<% if(typeof payments === 'undefined' || payments.length === 0) { %>
+			<h4>No payment records yet</h4>
+		<% } else { %>
+			<% payments.forEach(function(payment){ %>
+				<%- include('./payments_list.ejs', payment); %>
+			<% }) %>
+		<% } %>
+	</div>
+</div>

@@ -28,8 +28,8 @@ const PaymentSchema 	= new mongoose.Schema({
 	amount: {
 		type				: Number,
 		required		: true
-	}
-})
+	},
+}, { timestamps : true})
 
 const Payment = mongoose.model('Payment', PaymentSchema)
 
