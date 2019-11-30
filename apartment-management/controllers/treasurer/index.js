@@ -27,18 +27,8 @@ router.get('/view-flatowners', passport.authenticate('jwt', {session: false}), (
 	})
 })
 
-router.get('/create-payment-record/:id', passport.authenticate('jwt', { session: false}), (req, res, next) => {
-	
-	const { ownerId } = req.params
-	const { user_id } = req.user
-	
-	res.render('payment_record')
+router.post('/create-payment-record', passport.authenticate('jwt', { session: false}), (req, res, next) => {
 
-})
-
-router.post('/create-payment-record/:id', passport.authenticate('jwt', { session: false}), (req, res, next) => {
-	
-	const { ownerId } = req.params
 	const { user_id } = req.user
 
 	let paymentDetails = req.body
@@ -56,9 +46,30 @@ router.post('/create-payment-record/:id', passport.authenticate('jwt', { session
 			res.status(500).json({msg: 'An error occured'})
 		})
 	}).catch(next)
-
-
 })
 
+router.get('/view-payments', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+	Payment.find({}).then(payments => {
+		res.render('view_payments', { payments })
+	}).catch(next)
+})
+
+router.post('/update-payment-record', passport.authenticate('jwt', { session: false}), (req, res, next) => {
+	const { _userId, paymentType, mode, amount } = req.body
+	Payment.findOneAndUpdate({_userId}, { paymentType, mode, amount }, {
+		new: true,
+		upsert: true
+	}).then( updatedPayment => {
+		console.log("YAY UPDATED");
+		res.redirect('/users/treasurer/view-payments/')
+	}).catch(next)
+})
+
+router.delete('/delete-payment-record', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+	const { _userId } = req.body
+	Payment.findOneAndDelete({_userId: _userId}).then(() => {
+		res.status(200).json({msg: 'Deleted'})//redirect('/users/treasurer/view-payments/')
+	}).catch(next)
+})
 
 module.exports = router;

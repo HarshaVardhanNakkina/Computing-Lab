@@ -20,12 +20,12 @@ $('[id=create-payment-rec-form]').each(function() {
 
 		$.post(url, paymentDetails, function(){}).done(data => {
 			
-			$(this).trigger('reset')
+			// $(this).trigger('reset')
 		
 			msgDiv.append(
 				`
 				<div class='alert alert-success alert-dismissible text-center fade show' role='alert'>
-					${data.msg}
+					${typeof data === 'undefined' ? 'Success' : data.msg}
 				<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
 						<span aria-hidden='true'>&times;</span>
 						</button>
@@ -37,7 +37,7 @@ $('[id=create-payment-rec-form]').each(function() {
 			msgDiv.append(
 				`
 				<div class='alert alert-danger alert-dismissible text-center fade show' role='alert'>
-				${data.msg}
+				${typeof data === 'undefined' ? 'Error occured': data.msg}
 				<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
 						<span aria-hidden='true'>&times;</span>
 						</button>
