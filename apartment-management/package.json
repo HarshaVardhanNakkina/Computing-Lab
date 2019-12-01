@@ -24,11 +24,13 @@
 		"gridfs-stream": "^1.1.1",
 		"gulp-uglify": "^3.0.2",
 		"jsonwebtoken": "^8.5.1",
+		"mongo-xlsx": "^1.0.12",
 		"mongoose": "^5.7.1",
 		"multer": "^1.4.2",
 		"multer-gridfs-storage": "^3.3.0",
 		"mysql2": "^1.7.0",
 		"node-mailjet": "^3.3.1",
+		"node-msoffice-pdf": "0.0.7",
 		"passport": "^0.4.0",
 		"passport-jwt": "^4.0.0",
 		"passport-local": "^1.0.0"

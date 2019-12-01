@@ -16,9 +16,7 @@ const DueSchema = new mongoose.Schema({
         type:String,
         required: true
     },
-    approved:{
-        type: String
-    }
+    
     
 })
 
