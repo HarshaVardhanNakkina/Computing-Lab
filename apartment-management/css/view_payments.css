@@ -4,3 +4,21 @@
 	align-content: center;
 	flex-wrap: wrap;
 }
+
+.consolidated-payments-table {
+	width: 100%;
+  border-collapse: collapse;
+}
+.consolidated-payments-table td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.consolidated-payments-table tr:nth-child(even) {
+		background-color: #375a7f/*#dddddd*/;
+}
+
+.consolidated-payments-table tr:nth-child(odd) {
+	background-color:  #338686 /*#dddddd*/;
+}

@@ -27,4 +27,33 @@ router.get('/add-tenant',passport.authenticate('jwt', {session: false}), (req, r
 // 	}).catch(next)
 // })
 
+router.post('/add-tenant', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+	const { _id } = req.user
+	let tenantData = { ...req.body, _userId: _id }
+
+	TenantDetails.findOneAndUpdate({ _userId: _id }, tenantData, { new:true, upsert: true }).then((data) => {
+		res.render('add_tenant', { ...data, success_msg: 'Successful'} )
+	})
+})
+
+router.get('/update-tenant', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+	const { _id } = req.user
+
+	let tenantData = { ...req.body, _userId: _id }
+
+	TenantDetails.findOne({_userId: _id }).then(data => {
+		res.render('add_tenant', {data} )
+	})
+})
+
+router.post('/update-tenant', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+	const { _id } = req.user
+	let tenantData = { ...req.body, _userId: _id }
+
+	TenantDetails.findOneAndUpdate({_userId}, tenantData, { new:true, upsert: true }).then((data) => {
+		res.render('update-tenant', { ...data, success_msg: 'Successful'} )
+	})
+})
+
+
 module.exports = router
