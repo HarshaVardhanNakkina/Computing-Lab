@@ -1,0 +1,8 @@
+<tr>
+	<td><%= typeof madeBy !== 'undefined' ? madeBy.name : ''%></td>
+	<td><%= typeof madeBy !== 'undefined' ? madeBy.flatnum : ''%></td>
+	<td><%= typeof paymentType !== 'undefined' ? paymentType : ''%></td>
+	<td><%= typeof mode !== 'undefined' ? mode : ''%></td>
+	<td><%= typeof amount !== 'undefined' ? amount : ''%></td>
+	<td><%= typeof createdAt !== 'undefined' ? new Date(createdAt).toDateString() : ''%></td>
+</tr>

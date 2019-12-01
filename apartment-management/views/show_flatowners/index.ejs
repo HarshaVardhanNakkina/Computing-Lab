@@ -1,0 +1,10 @@
+
+<div class="container-fluid treasurer-profile my-5">
+		<% include ../partials/treasurer_menu %>
+		<div class="flat-owners-details">
+			<%# JSON.stringify(owners) %>
+			<% owners.forEach(function (owner){ %>
+				<%- include('./owner_profile.ejs', owner); %>
+			<% }) %>
+		</div>
+</div>

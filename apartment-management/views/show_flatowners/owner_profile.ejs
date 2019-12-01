@@ -1,0 +1,54 @@
+<div class="profile-container">
+		<div class="all-details bg-light">
+			<div class="essent-details">
+				<div class="profile-pic-card">
+					<img class="profile-pic" src="<%=`/users/profile/profilepic/${_userId}`%>" alt="profile picture" >
+				</div>
+				<ul class="profile-details">
+					<li class="detail">
+						<h4><%=typeof name !== 'undefined' ? name : '' %></h4>
+					</li>
+					<!-- <li class="detail hidden">
+						<b><i>Id : </i></b>
+						<%=typeof _userId !== 'undefined' ? _userId : '' %>
+					</li> -->
+					<li class="detail">
+						<!-- <i class="fa fa-building" aria-hidden="true"></i> -->
+						<b><i>Flat : </i></b>
+						<%=typeof flatnum !== 'undefined' ? flatnum : '' %>
+					</li>
+					<li class="detail">
+							<!-- <i class="fa fa-male" aria-hidden="true"></i> -->
+							<b><i>Father Name : </i></b>
+						<%=typeof fathername !== 'undefined' ? fathername : '' %>
+					</li>
+					<li class="detail">
+							<!-- <i class="fa fa-female" aria-hidden="true"></i> -->
+							<b><i>Mother Name : </i></b>
+						<%=typeof mothername !== 'undefined' ? mothername : '' %>
+					</li>
+					<li class="detail">
+							<!-- <i class="fa fa-briefcase" aria-hidden="true"></i> -->
+							<b><i>Occupation : </i></b>
+						<%=typeof occupation !== 'undefined' ? occupation : '' %>
+					</li>
+					<li class="detail">
+						<!-- <i class="fa fa-address-card" aria-hidden="true"></i> -->
+						<b><i>Communication Address : </i></b>
+						<%=typeof commaddress !== 'undefined' ? commaddress : '' %>
+					</li>
+					<li class="detail">
+						<!-- <i class="fa fa-address-card" aria-hidden="true"></i> -->
+						<b><i>Permenant Address : </i></b>
+						<%=typeof permaddress !== 'undefined' ? permaddress : '' %>
+					</li>
+				</ul>
+			</div>
+			<button id="create-payment-rec-btn" class="my-2 btn btn-primary align-right" data-id="<%=typeof _userId !== 'undefined' ? _userId : '' %>">Create payment record</button>
+			<div class="payment-record-details hidden">
+					<%- include('./payment_record.ejs', {_userId}) %>
+			</div>
+		</div>
+	</div>
+	
+	

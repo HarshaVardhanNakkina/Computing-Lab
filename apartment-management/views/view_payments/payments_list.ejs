@@ -1,0 +1,43 @@
+<div class="profile-container">
+	<div class="all-details bg-light">
+		<div class="payment-details">
+			<ul class="profile-details">
+				<li class="detail">
+					<h4><%=typeof madeBy !== 'undefined' ? madeBy.name : '' %></h4>
+				</li>
+				<li class="detail">
+					<b><i>Flat : </i></b>
+					<%=typeof madeBy !== 'undefined' ? madeBy.flatnum : '' %>
+				</li>
+				<li class="detail">
+					<b><i>Payment type : </i></b>
+					<%=typeof paymentType !== 'undefined' ? paymentType : '' %>
+				</li>
+				<li class="detail">
+					<b><i>Payment mode : </i></b>
+					<%=typeof mode !== 'undefined' ? mode : '' %>
+				</li>
+				<li class="detail">
+					<b><i>Amount : </i></b>
+					<%=typeof amount !== 'undefined' ? amount : '' %>
+				</li>
+				<li class="detail">
+					<b><i>Created at : </i></b>
+					<%=typeof createdAt !== 'undefined' ? new Date(createdAt).toDateString() : '' %>
+				</li>
+			</ul>
+		</div>
+		<button id="delete-payment-rec-btn" class="my-2 btn btn-danger align-right" data-id="<%=typeof _userId !== 'undefined' ? _userId : '' %>">Delete</button>
+		<ul class="confirm-before-delete hidden">
+			<li>Are you sure?</li>
+			<li id="delete-yes" class="btn btn-danger" data-id="<%= _userId %>"> Yes </li>
+			<li id="delete-no" class="btn btn-primary"> No </li>
+		</ul>
+		<button id="update-payment-rec-btn" class="my-2 btn btn-primary align-right" data-id="<%=typeof _userId !== 'undefined' ? _userId : '' %>">update</button>
+		<div class="payment-record-details hidden">
+			<%- include('./update_payment_rec.ejs', {_userId, amount, mode, paymentType}) %>
+		</div>
+	</div>
+</div>
+
+
