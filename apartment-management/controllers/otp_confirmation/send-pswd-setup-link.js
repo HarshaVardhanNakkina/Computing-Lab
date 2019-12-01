@@ -9,9 +9,10 @@ async function sendPswdSetupLink(user, data) {
 	let link = `http://localhost:5050/users/pswdsetup?user_id=${_id}&token=${token}`;
 	console.log('sending password setup link');
 	console.log(link);
-	// if(token) {
-	// 	return Promise.resolve();
-	// }
+	//! just for testing
+	if(token) {
+		return Promise.resolve();
+	}
 	// const request =
 	return mailjet.post('send', { version: 'v3.1' }).request({
 		Messages: [
