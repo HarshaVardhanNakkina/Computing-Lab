@@ -6,7 +6,7 @@
 	<div class='update-success-fail'></div>
 	<div class='form-container container-fluid row d-flex flex-row justify-content-between flex-wrap-reverse align-content-center align-items-center'>
 		<div class='col-7 details-from flex-fill'>
-			<form action="/users/tenants/add-tenant?user_id=<%=typeof user_id !== 'undefined'? user_id : ''%>&tenant_id=<%=typeof tenant_id !== 'undefined' ? tenant_id : ''%>" id='tenant-details-form' class='mb-2 mr-5' method='POST'>
+			<form action="/users/tenants/add-tenant" id='tenant-details-form' class='mb-2 mr-5' method='POST'>
 				<div class='form-group'>
 					<label for='name'>Tenant's name: </label>
 					<input
@@ -14,6 +14,7 @@
 						name='name'
 						id='name'
 						class='form-control'
+						value="<%= typeof name !== 'undefined' ? name : ''%>"
 						placeholder="Tenant name"
 						required
 					>
@@ -24,6 +25,7 @@
 						type='text'
 						name='fathername'
 						id='fathername'
+						value="<%= typeof fathername !== 'undefined' ? fathername : ''%>"
 						class='form-control'
 						placeholder="Tenant's father name"
 						required
@@ -35,6 +37,7 @@
 						type='text'
 						name='mothername'
 						id='mothername'
+						value="<%= typeof mothername !== 'undefined' ? mothername : ''%>"
 						class='form-control'
 						placeholder="Tenant's mother name"
 						required
@@ -46,6 +49,7 @@
 						type='text'
 						name='occupation'
 						id='occupation'
+						value="<%= typeof occupation !== 'undefined' ? occupation : ''%>"
 						class='form-control'
 						placeholder="Tenant's occupation"
 						required
@@ -57,6 +61,7 @@
 						type='text'
 						name='permaddress'
 						id='permaddress'
+						value="<%= typeof permaddress !== 'undefined' ? permaddress : ''%>"
 						class='form-control'
 						placeholder="Tenant's permanent address"
 						required
@@ -68,6 +73,7 @@
 						type='text'
 						name='mobile'
 						id='mobile'
+						value="<%= typeof mobile !== 'undefined' ? mobile : ''%>"
 						class='form-control'
 						placeholder="Tenant's mobile number"
 						required
@@ -79,6 +85,7 @@
 						type='email'
 						name='email'
 						id='email'
+						value="<%= typeof email !== 'undefined' ? email : ''%>"
 						class='form-control'
 						placeholder="Tenant's email"
 						required
@@ -86,8 +93,11 @@
 				</div>
 				<div class="form-group">
 					<label for="vehicleType">Tenant's vechicle type:</label>
-					<select class="form-control" id="vehicleType">
-							<option value="" selected disabled>None</option>
+					<select class="form-control" name="vehicleType" 
+						id="vehicleType"
+						value="<%= typeof vehicleType !== 'undefined' ? vehicleType : ''%>"
+					>
+						<option value="" selected disabled>None</option>
 						<option value="Two wheeler">Two wheeler</option>
 						<option value="Four wheeler">Four wheeler</option>
 					</select>
@@ -98,12 +108,13 @@
 							type='text'
 							name='vechicleRegNum'
 							id='vechicleRegNum'
+							value="<%= typeof vechicleRegNum !== 'undefined' ? vechicleRegNum : '' %>"
 							class='form-control'
 							placeholder="Tenant's vehicle registration number"
 							required
 						>
 				</div>
-				<button id="update-tenant-btn" type="submit" class="btn btn-primary btn-block">Update</button>
+				<button id="update-tenant-btn" type="submit" class="btn btn-primary btn-block">Submit</button>
 			</form>
 		</div>
 	</div>
