@@ -1,0 +1,5 @@
+<%# JSON.stringify(notices) %>
+<% notices.forEach(function(notice){ %>
+	<%# JSON.stringify(notice) %>
+	<%- include('./notice_list.ejs', notice) %>
+<%})%>

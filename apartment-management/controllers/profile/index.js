@@ -60,7 +60,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next)
 	User.findOne({_id : user_id}).then((det)=>{
 		const role = det.role;
 		if(role === "1"){
-			res.status(200).render('president');
+			res.status(200).redirect('/users/president');
 		}
 		else if(role === "2"){
 			res.status(200).render('secretary');
@@ -165,6 +165,8 @@ router.post('/update', passport.authenticate('jwt', {session: false}), (req, res
   
 });
 
+router.use('/create-complaint', require('./complaints.js'))
+
 //TODO: Upload, upate, delete profile pics...
 let gfs;
 connection.once('open', () => {
@@ -247,6 +249,22 @@ function deletePrevProof(req, res, next) {
 	next();
 }
 
+function deletePrevSaleProof(req, res, next) {
+	const { _id:user_id } = req.user
+	UserDetails.findOne({_userId: user_id}).then((details) => {
+		// console.log(details)
+		if(details && details !== undefined) {
+			const { saleProofId } = details;
+			if(saleProofId){
+				gfs.remove({ _id: saleProofId, root: 'profilepics'}, (err, store) => {
+					console.log(err);
+				});
+			}
+		}
+	}).catch(next);
+	next();
+}
+
 router.post('/address-proof-upload', passport.authenticate('jwt', {session: false}), deletePrevProof, (req, res, next) => {
 	// console.log("HELL YEAH UPLOAD");
 	const { _id: user_id } = req.user;
@@ -260,6 +278,26 @@ router.post('/address-proof-upload', passport.authenticate('jwt', {session: fals
 		UserDetails.findOneAndUpdate(
 				{ _userId: ObjectId(user_id) },
 				{ addressProofId: ObjectId(fileData.id) },
+				{ new:true, upsert: true }
+			).then(newDetails => {
+				res.redirect(`/users/profile/edit`)
+		}).catch(next);
+	})
+});
+
+router.post('/sale-proof-upload', passport.authenticate('jwt', {session: false}), deletePrevSaleProof, (req, res, next) => {
+	// console.log("HELL YEAH UPLOAD");
+	const { _id: user_id } = req.user;
+	upload.single('saleproof')(req, res, function(err, file){
+		if(err) console.log(err)
+		let fileData;
+		if(file) fileData = file
+		else {
+			fileData = req.file
+		}
+		UserDetails.findOneAndUpdate(
+				{ _userId: ObjectId(user_id) },
+				{ saleProofId: ObjectId(fileData.id) },
 				{ new:true, upsert: true }
 			).then(newDetails => {
 				res.redirect(`/users/profile/edit`)
@@ -299,6 +337,28 @@ router.get('/addressproof', passport.authenticate('jwt', {session: false, parseR
 		}
 		const { addressProofId } = userData
 		gfs.files.findOne({ _id: addressProofId }, (err, file) => {
+			if (err) next(err);
+			if(!file) {
+				res.sendFile('/img/palceholder.png', {root: 'static'})
+			}
+			else {
+				const readStream = gfs.createReadStream(file.filename);
+				readStream.pipe(res);
+			}
+		});
+	})
+});
+
+router.get('/saleproof', passport.authenticate('jwt', {session: false, parseReqBody: false}), (req, res, next) => {
+	// console.log("HELL YEAH PROFILE PIC");
+	const { _id: user_id } = req.user;
+	UserDetails.findOne({_userId: user_id}).then(userData => {
+		// console.log(userData);
+		if(!userData) {
+			res.sendFile('/img/palceholder.png', {root: 'static'})
+		}
+		const { saleProofId } = userData
+		gfs.files.findOne({ _id: saleProofId }, (err, file) => {
 			if (err) next(err);
 			if(!file) {
 				res.sendFile('/img/palceholder.png', {root: 'static'})
@@ -351,6 +411,26 @@ router.get('/addressproof/:user_id', passport.authenticate('jwt', {session: fals
 	})
 });
 
+router.get('/saleproof/:user_id', passport.authenticate('jwt', {session: false, parseReqBody: false}), (req, res, next) => {
+	const { user_id } = req.params;
+	UserDetails.findOne({_userId: ObjectId(user_id)}).then(userData => {
+		if(!userData) {
+			res.sendFile('/img/palceholder.png', {root: 'static'})
+		}
+		const { saleProofId } = userData
+		gfs.files.findOne({ _id: ObjectId(saleProofId) }, (err, file) => {
+			if (err) next(err);
+			if(!file) {
+				res.sendFile('/img/palceholder.png', {root: 'static'})
+			}
+			else {
+				const readStream = gfs.createReadStream(file.filename);
+				readStream.pipe(res);
+			}
+		});
+	})
+});
+
 
 router.get('/viewowners',passport.authenticate('jwt', {session: false, parseReqBody: false}) ,(req, res,next) => {
 		
@@ -367,7 +447,6 @@ router.get('/viewowners',passport.authenticate('jwt', {session: false, parseReqB
 			})
 
 			Promise.all(flat_owners).then((details) => {
-				console.log(details)
 				let flat_owners_details = details.reduce((acc, cur) => {
 					if(cur){
 						const {name, flatnum, _userId} = cur;
@@ -444,13 +523,11 @@ router.post(
     } = req.body;
     const doc = {};
     const {profilename, id} = req.query;
-    console.log(id);
     console.log("/viewowners/update/:updateid/ok");
     UserDetails.findOne({ _userId: id }).then(details => {
       if (!details) {
         res.status(400).json({ msg: " User Not found" });
       } else {
-        console.log(details);
 
         const { _id: user_id } = details._userId;
 

@@ -41,6 +41,7 @@ ul {
 
 .edit-profile-btn {
 	width: max-content;
+	margin-top: 5px;
 }
 .edit-profile-btn a{
 	text-decoration: none;
@@ -52,6 +53,15 @@ ul {
 	align-content: center;
 	align-items: center;
 	flex-wrap: wrap;
+}
+
+.proof-details {
+	display: flex;
+	justify-content: center;
+}
+
+.proof-img {
+	width: 50%;
 }
 .profile-pic-card {
 	width: 160px;

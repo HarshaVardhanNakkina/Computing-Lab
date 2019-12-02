@@ -2,12 +2,16 @@
 	<div class="all-details bg-light">
 		<div class="essent-details">
 			<div class="profile-pic-card">
-				<img class="profile-pic" src="/users/profile/profilepic" alt="profile picture" >
+				<img class="profile-pic" src="<%=`/users/profile/profilepic/${_userId}`%>" alt="profile picture" >
 			</div>
 			<ul class="profile-details">
 				<li class="detail">
 					<h4><%=typeof name !== 'undefined' ? name : '' %></h4>
 				</li>
+				<!-- <li class="detail hidden">
+					<b><i>Id : </i></b>
+					<%=typeof _userId !== 'undefined' ? _userId : '' %>
+				</li> -->
 				<li class="detail">
 					<!-- <i class="fa fa-building" aria-hidden="true"></i> -->
 					<b><i>Flat : </i></b>
@@ -41,22 +45,20 @@
 				<li class="detail">
 					<!-- <i class="fa fa-address-card" aria-hidden="true"></i> -->
 					<b><i>Is approved : </i></b>
-					<%=typeof isApproved !== 'undefined' ? isApproved : '' %>
+					<%=typeof isApproved !== 'undefined' ? isApproved : 'No' %>
 				</li>
 			</ul>
 		</div>
 		<div class="proof-details">
-			
+			<div class="proof-card">
+				<img class="proof-img" src="<%=`/users/profile/addressproof/${_userId}`%>" alt="profile picture" >
+			</div>
+			<div class="proof-card">
+				<img class="proof-img" src="<%=`/users/profile/saleproof/${_userId}`%>" alt="profile picture" >
+			</div>
 		</div>
-		<div class="edit-profile-btn">
-			<a href="/users/profile/edit" class="edit-profile-btn"><button type="button" class="btn btn-primary btn-block">Edit</button></a>
-		</div>
-		<div class="edit-profile-btn">
-			<a href="/users/profile/create-complaint" class="edit-profile-btn"><button type="button" class="btn btn-primary btn-block">Create complaint</button></a>
-		</div>
-		<%#<div class="edit-profile-btn">
-				<a href="/users/profile/create-complaint" class="edit-profile-btn"><button type="button" class="btn btn-primary btn-block">Create complaint</button></a>
-		</div>%>
+		<button id="approve-user-btn" class="my-2 btn btn-primary align-right" data-id="<%=typeof _id !== 'undefined' ? _id : '' %>">Approve</button>
+		<div class="approve-success-fail"></span>
 	</div>
 </div>
 
