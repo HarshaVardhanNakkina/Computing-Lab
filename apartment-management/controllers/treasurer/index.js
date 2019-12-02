@@ -15,7 +15,7 @@ router.get('/', (req, res, next) => {
 router.get('/view-flatowners', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 	User.find({}).then((owners) => {
 		owners = owners.filter((owner) => {
-			return typeof owner.role === 'undefined' || owner.role === '0'
+			return typeof owner.role === 'undefined' || owner.role === '5'
 		})
 		let ownerDetailsPromises = owners.map((owner) => {
 			const { _id: user_id } = owner;
