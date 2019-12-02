@@ -112,6 +112,16 @@
 				</div>
 				<button type="submit" class="btn btn-primary btn-block">Upload</button>
 			</form>
+			<div class="card card-body mb-3 p-2 profile-pic-card">
+				<img class="profile-pic" src="/users/profile/addressproof" alt="profile picture" >
+			</div>
+			<form class="mb-2" action="/users/profile/address-proof-upload" method="POST" enctype="multipart/form-data">
+				<div class="custom-file mb-3" id="profile-pic-input">
+					<input type="file" name="addressproof" class="custom-file-input" id="pic-upload">
+					<label class="custom-file-label color-black" for="pic-upload">Submit address proof</label>
+				</div>
+				<button type="submit" class="btn btn-primary btn-block">Upload</button>
+			</form>
 		</div>
 	</div>
 </div>

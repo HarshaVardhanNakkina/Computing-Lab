@@ -231,19 +231,77 @@ router.post('/profile-pic-upload', passport.authenticate('jwt', {session: false}
 	})
 });
 
+function deletePrevProof(req, res, next) {
+	const { _id:user_id } = req.user
+	UserDetails.findOne({_userId: user_id}).then((details) => {
+		// console.log(details)
+		if(details && details !== undefined) {
+			const { addressProofId } = details;
+			if(addressProofId){
+				gfs.remove({ _id: addressProofId, root: 'profilepics'}, (err, store) => {
+					console.log(err);
+				});
+			}
+		}
+	}).catch(next);
+	next();
+}
+
+router.post('/address-proof-upload', passport.authenticate('jwt', {session: false}), deletePrevProof, (req, res, next) => {
+	// console.log("HELL YEAH UPLOAD");
+	const { _id: user_id } = req.user;
+	upload.single('addressproof')(req, res, function(err, file){
+		if(err) console.log(err)
+		let fileData;
+		if(file) fileData = file
+		else {
+			fileData = req.file
+		}
+		UserDetails.findOneAndUpdate(
+				{ _userId: ObjectId(user_id) },
+				{ addressProofId: ObjectId(fileData.id) },
+				{ new:true, upsert: true }
+			).then(newDetails => {
+				res.redirect(`/users/profile/edit`)
+		}).catch(next);
+	})
+});
+
 router.get('/profilepic', passport.authenticate('jwt', {session: false, parseReqBody: false}), (req, res, next) => {
 	// console.log("HELL YEAH PROFILE PIC");
 	const { _id: user_id } = req.user;
 	UserDetails.findOne({_userId: user_id}).then(userData => {
 		// console.log(userData);
 		if(!userData) {
-			res.sendFile('/img/abott@adorable.io.png', {root: 'static'})
+			res.sendFile('/img/palceholder.png', {root: 'static'})
 		}
 		const { profilepicId } = userData
 		gfs.files.findOne({ _id: profilepicId }, (err, file) => {
 			if (err) next(err);
 			if(!file) {
-				res.sendFile('/img/abott@adorable.io.png', {root: 'static'})
+				res.sendFile('/img/palceholder.png', {root: 'static'})
+			}
+			else {
+				const readStream = gfs.createReadStream(file.filename);
+				readStream.pipe(res);
+			}
+		});
+	})
+});
+
+router.get('/addressproof', passport.authenticate('jwt', {session: false, parseReqBody: false}), (req, res, next) => {
+	// console.log("HELL YEAH PROFILE PIC");
+	const { _id: user_id } = req.user;
+	UserDetails.findOne({_userId: user_id}).then(userData => {
+		// console.log(userData);
+		if(!userData) {
+			res.sendFile('/img/palceholder.png', {root: 'static'})
+		}
+		const { addressProofId } = userData
+		gfs.files.findOne({ _id: addressProofId }, (err, file) => {
+			if (err) next(err);
+			if(!file) {
+				res.sendFile('/img/palceholder.png', {root: 'static'})
 			}
 			else {
 				const readStream = gfs.createReadStream(file.filename);
@@ -257,13 +315,33 @@ router.get('/profilepic/:user_id', passport.authenticate('jwt', {session: false,
 	const { user_id } = req.params;
 	UserDetails.findOne({_userId: ObjectId(user_id)}).then(userData => {
 		if(!userData) {
-			res.sendFile('/img/abott@adorable.io.png', {root: 'static'})
+			res.sendFile('/img/palceholder.png', {root: 'static'})
 		}
 		const { profilepicId } = userData
 		gfs.files.findOne({ _id: ObjectId(profilepicId) }, (err, file) => {
 			if (err) next(err);
 			if(!file) {
-				res.sendFile('/img/abott@adorable.io.png', {root: 'static'})
+				res.sendFile('/img/palceholder.png', {root: 'static'})
+			}
+			else {
+				const readStream = gfs.createReadStream(file.filename);
+				readStream.pipe(res);
+			}
+		});
+	})
+});
+
+router.get('/addressproof/:user_id', passport.authenticate('jwt', {session: false, parseReqBody: false}), (req, res, next) => {
+	const { user_id } = req.params;
+	UserDetails.findOne({_userId: ObjectId(user_id)}).then(userData => {
+		if(!userData) {
+			res.sendFile('/img/palceholder.png', {root: 'static'})
+		}
+		const { addressProofId } = userData
+		gfs.files.findOne({ _id: ObjectId(addressProofId) }, (err, file) => {
+			if (err) next(err);
+			if(!file) {
+				res.sendFile('/img/palceholder.png', {root: 'static'})
 			}
 			else {
 				const readStream = gfs.createReadStream(file.filename);

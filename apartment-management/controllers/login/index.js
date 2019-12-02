@@ -36,12 +36,12 @@ router.post('/', async (req, res, next) => {
 			req.login(user, { session: false }, async (error) => {
 				if(error) res.status(404).json(info)
 				
-				console.log(user)
+				// console.log(user)
 				const body = {_id: user._id, email: user.email}
-				const { firstTimeLogin } = user
+				const { firstTimeLogin, role } = user
 				const token = jwt.sign({user: body}, 'hymn_for_the_weekend')
 				res.cookie('jwt_cookie', token)
-				res.json({ token, firstTimeLogin,  })
+				res.json({ token, firstTimeLogin, role  })
 			
 			})
 		} catch (error) {

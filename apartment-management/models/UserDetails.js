@@ -15,6 +15,10 @@ const UserDetailsSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     default: null
 	},
+	addressProofId: {
+		type: mongoose.Schema.Types.ObjectId,
+    default: null
+	},
   name: {
     type: String,
     required: true
@@ -38,6 +42,10 @@ const UserDetailsSchema = new mongoose.Schema({
 	permaddress:{
 		type: String,
 		required: true
+	},
+	isApproved: {
+		type: Boolean,
+		default: false
 	}
 });
 

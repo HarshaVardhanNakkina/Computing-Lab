@@ -6,7 +6,16 @@
 	<div class='update-success-fail'></div>
 	<div class='form-container container-fluid row d-flex flex-row justify-content-between flex-wrap-reverse align-content-center align-items-center'>
 		<div class='col-7 details-from flex-fill'>
-			<form action="/users/tenants/add-tenant" id='tenant-details-form' class='mb-2 mr-5' method='POST'>
+			<form action="<%= `/users/tenants/update-tenant/${_id}` %>" id='tenant-details-form' class='mb-2 mr-5' method='POST'>
+				<div class='form-group'>
+					<input
+						type='hidden'
+						name='_id'
+						id='_id'
+						class='form-control'
+						value="<%= typeof _id !== 'undefined' ? _id : ''%>"
+					>
+				</div>
 				<div class='form-group'>
 					<label for='name'>Tenant's name: </label>
 					<input

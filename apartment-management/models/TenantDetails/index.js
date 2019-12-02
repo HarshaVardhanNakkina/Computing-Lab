@@ -34,11 +34,11 @@ const TenantDetailsSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	vechicleType: {
+	vehicleType: {
 		type: String,
 		default: ''
 	},
-	vechicleRegNum: {
+	vehicleRegNum: {
 		type: String,
 		default: ''
 	}

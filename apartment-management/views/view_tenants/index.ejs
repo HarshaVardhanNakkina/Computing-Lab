@@ -1,0 +1,7 @@
+<%# JSON.stringify(tenants) %>
+<% tenants.forEach(function(tenant){ %>
+	 
+	<%# JSON.stringify(tenant) %>
+	<%- include('./tenants_list.ejs', tenant) %>
+<% }) %>
+

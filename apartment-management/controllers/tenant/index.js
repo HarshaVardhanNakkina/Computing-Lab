@@ -10,89 +10,45 @@ router.get('/add-tenant',passport.authenticate('jwt', {session: false}), (req, r
 	res.render('add_tenant')
 });
 
-// router.get('/:user_id', (req, res, next) => {
-// 	const { user_id } = req.params;
-// 	TenantDetails.find({_userId: user_id}).then((data) => {
-// 		res.render('list_tenants', { data });
-// 	})
-// })
-
-// router.post('/add-tenant', ensureAuthenticated, (req, res, next) => {
-// 	const { user_id, tenant_id } = req.query
-// 	let tenantDet = {...req.body, _userId: ObjectId(user_id)}
-// 	TenantDetails.findOneAndUpdate({_userId: user_id}, tenantDet, {new: true, upsert: true}).then((newDetails) => {
-// 		req.flash('success_msg', 'updated successfully')
-// 		req.flash('user_id', user_id)
-// 		res.redirect(`/users/tenants/${user_id}`)
-// 	}).catch(next)
-// })
-
-// router.post('/add-tenant', ensureAuthenticated, (req, res, next) => {
-// 	const { user_id, tenant_id } = req.query
-// 	let tenantDet = {...req.body, _userId: ObjectId(user_id)}
-// 	TenantDetails.findOneAndUpdate({_userId: user_id}, tenantDet, {new: true, upsert: true}).then((newDetails) => {
-// 		req.flash('success_msg', 'updated successfully')
-// 		req.flash('user_id', user_id)
-// 		res.redirect(`/users/tenants/${user_id}`)
-// 	}).catch(next)
-// })
 
 router.post('/add-tenant', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 	const { _id } = req.user
 	let tenantData = { ...req.body, _userId: _id }
 
-	TenantDetails.findOneAndUpdate({ _userId: _id }, tenantData, { new:true, upsert: true }).then((data) => {
-		res.render('add_tenant', { ...data, success_msg: 'Successful'} )
-	})
+	let newTenant = new TenantDetails(tenantData);
+	newTenant.save().then(() => {
+		res.render('add_tenant', { newTenant, success_msg: 'Successful'} )
+	}).catch(next)
+
+	// TenantDetails.findOneAndUpdate({ _id: _id }, tenantData, { new:true, upsert: true }).then((data) => {
+	// })
 })
 
-router.get('/update-tenant', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+router.get('/view-tenants', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 	const { _id } = req.user
 
-	let tenantData = { ...req.body, _userId: _id }
-
-	TenantDetails.findOne({_userId: _id }).then(data => {
-		res.render('add_tenant', {data} )
+	TenantDetails.find({_userId: _id }).then(data => {
+		res.render('view_tenants', { tenants: data } )
 	})
 })
 
-router.post('/update-tenant', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-	const { _id } = req.user
-	let tenantData = { ...req.body, _userId: _id }
-
-	TenantDetails.findOneAndUpdate({_userId}, tenantData, { new:true, upsert: true }).then((data) => {
-		res.render('update-tenant', { ...data, success_msg: 'Successful'} )
+router.get('/update-tenant/:id', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+	const { id } = req.params
+	TenantDetails.findOne({ _id: id }).then(data => {
+		res.render('update_tenant', data)
 	})
 })
 
-
-router.post('/add-tenant', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-	const { _id } = req.user
-	let tenantData = { ...req.body, _userId: _id }
-
-	TenantDetails.findOneAndUpdate({ _userId: _id }, tenantData, { new:true, upsert: true }).then((data) => {
-		res.render('add_tenant', { ...data, success_msg: 'Successful'} )
-	})
+router.post('/update-tenant/:id', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+	const { id } = req.params
+	let tenantData = {...req.body}
+	TenantDetails.findOneAndUpdate({ _id: id }, tenantData, {new: true, upsert: true}).then(data => {
+		res.render('add_tenant', data)
+	}).catch(next)
 })
 
-router.get('/update-tenant', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-	const { _id } = req.user
 
-	let tenantData = { ...req.body, _userId: _id }
 
-	TenantDetails.findOne({_userId: _id }).then(data => {
-		res.render('add_tenant', {data} )
-	})
-})
-
-router.post('/update-tenant', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-	const { _id } = req.user
-	let tenantData = { ...req.body, _userId: _id }
-
-	TenantDetails.findOneAndUpdate({_userId}, tenantData, { new:true, upsert: true }).then((data) => {
-		res.render('update-tenant', { ...data, success_msg: 'Successful'} )
-	})
-})
 
 
 module.exports = router

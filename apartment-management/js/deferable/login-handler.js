@@ -8,9 +8,9 @@ $('#login-form').submit(function(event){
 	},{})
 	const url = $(this).attr('action')
 	$.post(url, formData, function(data){
-		const { firstTimeLogin } = data;
+		const { firstTimeLogin, role } = data;
 		console.log(firstTimeLogin)
-		if (firstTimeLogin){
+		if (firstTimeLogin && role === '5'){
 			window.location.replace(window.location.origin+`/users/profile/edit`)	
 		}else
 			window.location.replace(window.location.origin)

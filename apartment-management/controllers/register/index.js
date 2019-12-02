@@ -25,24 +25,26 @@ router.post('/', (req, res, next) => {
 		errors.push({ msg: 'Enter a valid mobile number' });
 
 	if (errors.length > 0) {
-		res.status(400).render('register', {
-			errors,
-			doornum,
-			email,
-			mobile
-		});
+		// res.status(400).render('register', {
+		// 	errors,
+		// 	doornum,
+		// 	email,
+		// 	mobile
+		// });
+		res.status(400).json(errors);
 	} else {
 		// all validations passed
 		User.findOne({ doornum }).then(user => {
 			if (user) {
 				// Door no. already registered
 				errors.push({ msg: 'Door number is already registered' });
-				res.status(400).render('register', {
-					errors,
-					doornum,
-					email,
-					mobile
-				});
+				// res.status(400).render('register', {
+				// 	errors,
+				// 	doornum,
+				// 	email,
+				// 	mobile
+				// });
+				res.status(400).json(errors);
 			}
 			else {	
 				const newUser = new User({ doornum, email, mobile });
