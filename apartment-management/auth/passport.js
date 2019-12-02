@@ -21,9 +21,9 @@ module.exports = function(passport) {
 		passwordField: 'password'
 	}, (email, password, done) => {
 		console.log("ENTERED THE LOGIN");
-		console.log(email + password);
+		// console.log(email + password);
 		const user = User.findOne({ email }).then((user) => {
-			console.log(user)
+			// console.log(user)
 			if (!user){
 				console.log("NOT USER CONDITION")
 				return done(null, false, {message:'Invalid credentials'})

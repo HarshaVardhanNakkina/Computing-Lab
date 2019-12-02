@@ -72,8 +72,11 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next)
 			res.status(200).render('office');
 		}
 		else{
-			console.log(...details.toJSON())
-			res.status(200).render('profile',{...details.toJSON()});
+			const { _id: user_id } = det
+			UserDetails.findOne({_userId: user_id}).then(details => {
+				// console.log(details)
+				res.status(200).render('profile',{...details.toJSON()});
+			})
 		}
 	})
 	.catch(err=>{

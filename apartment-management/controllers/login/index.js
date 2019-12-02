@@ -38,10 +38,10 @@ router.post('/', async (req, res, next) => {
 				
 				console.log(user)
 				const body = {_id: user._id, email: user.email}
-				const {firstTimeLogin} = user
+				const { firstTimeLogin } = user
 				const token = jwt.sign({user: body}, 'hymn_for_the_weekend')
 				res.cookie('jwt_cookie', token)
-				res.json({ token, firstTimeLogin })
+				res.json({ token, firstTimeLogin,  })
 			
 			})
 		} catch (error) {
