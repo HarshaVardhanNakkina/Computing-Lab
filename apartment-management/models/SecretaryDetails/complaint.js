@@ -13,7 +13,8 @@ const complaint = new mongooose.Schema({
         required: true
     },
     approved:{
-        type: String
+        type: String,
+        default :"Not approved"
     }
 })
 

@@ -1,0 +1,27 @@
+<div class="profile-container">
+        <div class="all-details bg-light">
+            <div class="essent-details">
+               
+                <ul class="profile-details">
+                        <div class="list-group">
+                                <%# JSON.stringify(owners) %>
+                                <% owners.forEach( function (person){ %>
+                                   
+                                    <a href="#" class="list-group-item active"><%= person.name %>&nbsp;&nbsp;&nbsp;<input type="button" onClick="" value="Update"></input>&nbsp;&nbsp;&nbsp;<input type="button" onClick="" value="Delete"></input></a>
+                    
+                                    
+                                
+                                    <!-- <i class="fa fa-building" aria-hidden="true"></i> -->
+                                  
+                              
+                                <% }); %>
+                            
+                          </div> 
+                </ul>
+            </div>
+         
+            
+        </div>
+    </div>
+   
+    

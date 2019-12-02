@@ -1,0 +1,31 @@
+<br></br>
+<input type="button" id="employee" onClick="location.href='http://localhost:5050/users/profile/addemp'" value="Create New Employee" style="margin: auto; display: block;"></input><br></br>
+
+<%# JSON.stringify(emp_list) %>
+<% emp_list.forEach(function(com){%>
+
+    <ul class="list-group">
+    <li class="list-group-item">
+            <input type="hidden" id="amount" name="empname" value="<%= com.name%>">
+
+        <input type="hidden" id="against" name="duty" value="<%= com.occupation%>">
+        <input type="hidden" id="cause" name="dutytime" value="<%= com.Dutytime%>">
+        <input type="hidden" id="approved" name="shift" value="<%= com.shift%>">
+        <input type="hidden" id="approved" name="datefrom" value="<%= com.Datefrom%>">
+        <input type="hidden" id="approved" name="dateto" value="<%= com.Dateto%>">
+
+        Emp Name : &nbsp;&nbsp;<label for="amount"><%= com.name%></label><br></br>
+
+        Duty : &nbsp;&nbsp;<label for="against"><%= com.occupation%></label><br></br>
+        Dutytime : &nbsp;&nbsp;<label for="cause"><%= com.Dutytime %></label><br></br>
+        Shift : &nbsp;&nbsp;<label for="cause"><%= com.shift %></label><br></br>
+        Date from  : &nbsp;&nbsp;<label for="cause"><%= com.Datefrom %></label><br></br>
+        Date To : &nbsp;&nbsp;<label for="cause"><%= com.Dateto %></label><br></br>
+
+    
+    
+    </li>
+    </ul>
+  
+
+<% });%>

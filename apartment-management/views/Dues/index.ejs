@@ -1,0 +1,18 @@
+<%# JSON.stringify(due_list) %>
+<% due_list.forEach(function(com){%>
+    <ul class="list-group">
+    <li class="list-group-item">
+            <input type="hidden" id="amount" name="amount" value="<%= com.against%>">
+
+        <input type="hidden" id="against" name="against" value="<%= com.against%>">
+        <input type="hidden" id="cause" name="cause" value="<%= com.cause%>">
+        <input type="hidden" id="approved" name="approved" value="<%= com.approved%>">
+        Due Amount : &nbsp;&nbsp;<label for="amount"><%= com.amount%></label><br></br>
+
+        Duename : &nbsp;&nbsp;<label for="against"><%= com.duename%></label><br></br>
+        Duemonth : &nbsp;&nbsp;<label for="cause"><%= com.duemonth %></label><br></br>
+    </li>
+    </ul>
+  
+
+<% });%>
