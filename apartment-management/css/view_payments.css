@@ -3,8 +3,6 @@
 	justify-content: flex-start;
 	align-content: center;
 	flex-wrap: wrap;
-<<<<<<< HEAD
-=======
 }
 
 .consolidated-payments-table {
@@ -23,5 +21,4 @@
 
 .consolidated-payments-table tr:nth-child(odd) {
 	background-color:  #338686 /*#dddddd*/;
->>>>>>> e21797b4ad3c59889c0a52499b620485f40d9f96
 }

@@ -71,14 +71,10 @@ router.delete('/delete-payment-record', passport.authenticate('jwt', {session: f
 		res.status(200).json({msg: 'Deleted'})//redirect('/users/treasurer/view-payments/')
 	}).catch(next)
 })
-
-<<<<<<< HEAD
-=======
 router.get('/consolidated-payments', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 	Payment.find({}).then(payments => {
 		res.render('consolidated_payments', { payments })
 	}).catch(next)
 })
 
->>>>>>> e21797b4ad3c59889c0a52499b620485f40d9f96
 module.exports = router;
