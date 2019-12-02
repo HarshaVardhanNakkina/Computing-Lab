@@ -29,4 +29,6 @@ router.use('/tenants', require('../controllers/tenant'));
 
 router.use('/treasurer', require('../controllers/treasurer'))
 
+router.use('/president', require('../controllers/president'))
+
 module.exports = router;

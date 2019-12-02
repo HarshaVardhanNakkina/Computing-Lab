@@ -1,0 +1,37 @@
+<div class="profile-container">
+		<div class="all-details bg-light">
+			<div class="essent-details">
+					<ul class="complaints-container">
+							<li class="complaint">
+								<!-- <i class="fa fa-building" aria-hidden="true"></i> -->
+								<b><i>From : </i></b>
+								<%=typeof from !== 'undefined' ? from : '' %>
+							</li>
+							<li class="complaint">
+									<!-- <i class="fa fa-male" aria-hidden="true"></i> -->
+									<b><i>To : </i></b>
+								<%=typeof to !== 'undefined' ? to : '' %>
+							</li>
+							<li class="complaint">
+									<!-- <i class="fa fa-female" aria-hidden="true"></i> -->
+									<b><i>Title : </i></b>
+								<%=typeof title !== 'undefined' ? title : '' %>
+							</li>
+							<li class="complaint">
+									<!-- <i class="fa fa-briefcase" aria-hidden="true"></i> -->
+									<b><i>Message : </i></b>
+								<%=typeof message !== 'undefined' ? message : '' %>
+							</li>
+							<li class="complaint">
+									<!-- <i class="fa fa-briefcase" aria-hidden="true"></i> -->
+									<b><i>Is approved : </i></b>
+								<%=typeof isApproved !== 'undefined' ? isApproved : '' %>
+							</li>
+					</ul>
+					<button id="approve-notice" data-id= "<%= typeof _id !== 'undefine' ? _id : ''%>"class="btn btn-primary">Approve</button>
+					<div class="approve-success-fail"></div>
+			</div>
+		</div>
+	</div>
+	
+	

@@ -20,7 +20,11 @@ const NoticeSchema = new mongoose.Schema({
     },
     msg:{
         type: String
-    }
+		},
+		isApproved: {
+			type: Boolean,
+			default: false
+		}
 })
 
 const Notice = mongoose.model('Notices',NoticeSchema)
