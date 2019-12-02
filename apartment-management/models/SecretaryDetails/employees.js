@@ -26,9 +26,6 @@ const Employee = new mongoose.Schema({
     Dateto:{
         type: Date,
         required: true
-    },
-    approved:{
-        type: String
     }
 })
 

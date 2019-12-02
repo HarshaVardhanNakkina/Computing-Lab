@@ -20,11 +20,17 @@ module.exports = function(passport) {
 		usernameField: 'email',
 		passwordField: 'password'
 	}, (email, password, done) => {
-		// console.log("ENTERED THE LOGIN");
+		console.log("ENTERED THE LOGIN");
+		console.log(email + password);
 		const user = User.findOne({ email }).then((user) => {
-			if (!user)
+			console.log(user)
+			if (!user){
+				console.log("NOT USER CONDITION")
 				return done(null, false, {message:'Invalid credentials'})
+			}
 			if (!user.verified)
+				//console.log("NOT VERIFIED CONDITION")
+
 				return done(null, false, { message: 'Verify your email/mobile and set your password'})
 			bcrypt.compare(password, user.password, (err, isMatch) => {
 						if (err) throw err;

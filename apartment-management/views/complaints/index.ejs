@@ -1,0 +1,18 @@
+<%# JSON.stringify(comp_list) %>
+<% comp_list.forEach(function(com){%>
+    <form action="/users/profile/viewcomplaints/change" id="update-complaint-status-form" method="POST">
+    <ul class="list-group">
+    <li class="list-group-item">
+        <input type="hidden" id="against" name="against" value="<%= com.against%>">
+        <input type="hidden" id="cause" name="cause" value="<%= com.cause%>">
+        <input type="hidden" id="approved" name="approved" value="<%= com.approved%>">
+        Against : &nbsp;&nbsp;<label for="against"><%= com.against%></label><br></br>
+        Complaint : &nbsp;&nbsp;<label for="cause"><%= com.cause %></label><br></br>
+        Approval : &nbsp;&nbsp;<lablel for="approve"><span class="badge badge-primary badge-pill"><%= com.approved %></span></lablel>&nbsp;&nbsp;&nbsp;
+        <button type="submit" value="Change Status">Change Status</button>
+    </li>
+    </ul>
+    </form>
+
+<% });%>
+ 
