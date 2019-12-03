@@ -25,6 +25,10 @@
 					<b><i>Created at : </i></b>
 					<%=typeof createdAt !== 'undefined' ? new Date(createdAt).toDateString() : '' %>
 				</li>
+				<li class="detail">
+					<b><i>Is Paid : </i></b>
+					<%=typeof isApproved !== 'undefined' ? isApproved : '' %>
+				</li>
 			</ul>
 		</div>
 		<button id="delete-payment-rec-btn" class="my-2 btn btn-danger align-right" data-id="<%=typeof _userId !== 'undefined' ? _userId : '' %>">Delete</button>
@@ -34,6 +38,9 @@
 			<li id="delete-no" class="btn btn-primary"> No </li>
 		</ul>
 		<button id="update-payment-rec-btn" class="my-2 btn btn-primary align-right" data-id="<%=typeof _userId !== 'undefined' ? _userId : '' %>">update</button>
+		<button id="approve-payment-rec-btn" data-id="<%=typeof _id !== 'undefined' ? _id : '' %>" class="my-2 btn btn-primary align-right" data-id="<%=typeof _userId !== 'undefined' ? _userId : '' %>"
+			<%= typeof isApproved !== 'undefined' && isApproved ? 'disabled' : '' %>
+			><%= typeof isApproved !== 'undefined' && isApproved? 'Approved already' : 'Approve' %></button>
 		<div class="payment-record-details hidden">
 			<%- include('./update_payment_rec.ejs', {_userId, amount, mode, paymentType}) %>
 		</div>

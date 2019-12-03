@@ -71,10 +71,33 @@ router.delete('/delete-payment-record', passport.authenticate('jwt', {session: f
 		res.status(200).json({msg: 'Deleted'})//redirect('/users/treasurer/view-payments/')
 	}).catch(next)
 })
+
+router.post('/approve-payment-record', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+	const { _id } = req.body
+	Payment.findOneAndUpdate({_id: _id}, {isApproved: true}, {new: true, upsert: true}).then((newRecord) => {
+		res.status(200).json({msg: 'Success'})
+	}).catch(err => {
+		res.status(200).json({msg: 'Error occured'})
+	})
+})
+
+
 router.get('/consolidated-payments', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 	Payment.find({}).then(payments => {
 		res.render('consolidated_payments', { payments })
 	}).catch(next)
 })
+
+// router.delete('/delete-payment-record', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+// 	const { _userId } = req.body
+// 	Payment.findOneAndDelete({_userId: _userId}).then(() => {
+// 		res.status(200).json({msg: 'Deleted'})//redirect('/users/treasurer/view-payments/')
+// 	}).catch(next)
+// })
+// router.get('/consolidated-payments', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+// 	Payment.find({}).then(payments => {
+// 		res.render('consolidated_payments', { payments })
+// 	}).catch(next)
+// })
 
 module.exports = router;

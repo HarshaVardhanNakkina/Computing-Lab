@@ -29,6 +29,10 @@ const PaymentSchema 	= new mongoose.Schema({
 		type				: Number,
 		required		: true
 	},
+	isApproved: {
+		type: Boolean,
+		default: false
+	}
 }, { timestamps : true})
 
 const Payment = mongoose.model('Payment', PaymentSchema)
