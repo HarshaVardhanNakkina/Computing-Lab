@@ -36,20 +36,6 @@ const { ensureAuthenticated } = require('../../auth/auth');
 router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 	// console.log("GET PROFILE !!!!!!!!!");
 	const { _id: user_id } = req.user;
-
-	// res.render('profile',{
-	// 		profilepicId: '5dac0014c65e486064de203c',
-	// 		occupation: 'Credit Analyst',
-	// 		_id: '5da1bf41dd67a863836eaad7',
-	// 		_userId: '5da1be88c2fab26cb73f3381',
-	// 		__v: 0,
-	// 		commaddress: 'Nupur Bishnu Sood\r\n98, Chinchwad, Darjeeling - 226068',
-	// 		fathername: 'Bishnu Sood',
-	// 		flatnum: '98',
-	// 		mothername: 'Nupur Sood',
-	// 		name: 'Nupur Bishnu Sood',
-	// 		permaddress: 'Nupur Bishnu Sood\r\n98, Chinchwad, Darjeeling - 226068'
-	// 	})
 	
   UserDetails.findOne({_userId: user_id}).then((details) => {
 	if(!details) {
@@ -74,7 +60,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next)
 		else{
 			const { _id: user_id } = det
 			UserDetails.findOne({_userId: user_id}).then(details => {
-				// console.log(details)
+				console.log(details)
 				res.status(200).render('profile',{...details.toJSON()});
 			})
 		}
@@ -96,6 +82,7 @@ router.get('/edit', passport.authenticate('jwt', {session: false}), (req, res, n
 		}
 		UserDetails.findOne({_userId: user_id}).then((details) => {
 			if(!details) {
+				console.log(details)
 				// res.status(401).json({message: 'Unauthorized access'})
 				res.render('profile_update')
 			}else {
@@ -108,21 +95,13 @@ router.get('/edit', passport.authenticate('jwt', {session: false}), (req, res, n
 
 router.get('/edit/:id', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 	const name = req.params.id;
-	//user = {name: }
-	/*User.findOne({_id: user_id}).then((user) => {
-		if(!user) {
-			res.render('profile_update')
-		}
-		*/
 		UserDetails.findOne({ name: name}).then((details) => {
 			if(!details) {
-				// res.status(401).json({message: 'Unauthorized access'})
 				res.render('profile_update')
 			}else {
 				res.render('profile_update', {...details.toJSON()})
 			}
 		}).catch(next);
-	//})
 })
 
 
@@ -151,16 +130,26 @@ router.post('/update', passport.authenticate('jwt', {session: false}), (req, res
       {errors, ...req.body}
     );
   }else {
-		let userDet = new Object({ _userId: ObjectId(user_id), flatnum, name, fathername, mothername, occupation, commaddress, permaddress });
+		let userDet = { _userId: ObjectId(user_id), flatnum, name, fathername, mothername, occupation, commaddress, permaddress };
 
-		UserDetails.findOneAndUpdate({ _userId: user_id }, userDet, {new: true, upsert: true}).then((newDetails) => {
-			// console.log(newDetails);
-			User.findOneAndUpdate({_id: user_id}, {detailsGiven: true, firstTimeLogin: false}).then((updatedUser) => {
-				// req.flash('success_msg', 'profile is updated')
-				// req.flash('user_id', user_id);
-				res.status(200).json({message: 'profile update is successful'});
-			}).catch(next);
-		}).catch(next);
+		UserDetails.find({_userId: user_id}).then((user) => {
+			if(!user) {
+				let newUser = new UserDetails(userDet)
+				newUser.save().then((savedUser) => {
+					res.status(200).json({message: 'profile update is successful'});
+				}).catch(next)
+			}else {
+				UserDetails.findOneAndUpdate({ _userId: user_id }, userDet, {new: true, upsert: true}).then((newDetails) => {
+					// console.log(newDetails);
+					User.findOneAndUpdate({_id: user_id}, {detailsGiven: true, firstTimeLogin: false}).then((updatedUser) => {
+						// req.flash('success_msg', 'profile is updated')
+						// req.flash('user_id', user_id);
+						res.status(200).json({message: 'profile update is successful'});
+					}).catch(next);
+				}).catch(next);
+			}
+		})
+
   }
   
 });
@@ -346,7 +335,7 @@ router.get('/addressproof', passport.authenticate('jwt', {session: false, parseR
 				readStream.pipe(res);
 			}
 		});
-	})
+	}).catch(next)
 });
 
 router.get('/saleproof', passport.authenticate('jwt', {session: false, parseReqBody: false}), (req, res, next) => {
@@ -683,7 +672,7 @@ router.post(
 		Complaints.findOne({ against : comagainst})
 		.then( profile =>{
 			console.log("Found complaint"+profile.approved)
-			if(profile.approved === "Not Approved" ){
+			if(profile.approved === "Not Approved" || profile.approved === "Not approved" ){
 				Complaints.findOneAndUpdate({ against : comagainst},{ $set :{approved : "Approved"}},{new : true})
 				.then( pro =>{
 					console.log(pro)
