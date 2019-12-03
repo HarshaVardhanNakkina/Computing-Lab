@@ -3,8 +3,15 @@
 		<% include ../partials/treasurer_menu %>
 		<div class="flat-owners-details">
 			<%# JSON.stringify(owners) %>
-			<% owners.forEach(function (owner){ %>
-				<%- include('./owner_profile.ejs', owner); %>
-			<% }) %>
+			<% if(owners.length) { %>
+				<% owners.forEach(function (owner){ %>
+					<%- include('./owner_profile.ejs', owner); %>
+				<% }) %>
+
+			<% } else { %>
+
+				<h4>No one to show yet</h4>
+
+			<% } %>
 		</div>
 </div>

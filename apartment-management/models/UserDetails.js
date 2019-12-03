@@ -19,6 +19,10 @@ const UserDetailsSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
     default: null
 	},
+	saleProofId: {
+		type: mongoose.Schema.Types.ObjectId,
+    default: null
+	},
   name: {
     type: String,
     required: true

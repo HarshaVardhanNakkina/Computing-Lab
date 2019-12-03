@@ -36,20 +36,6 @@ const { ensureAuthenticated } = require('../../auth/auth');
 router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 	// console.log("GET PROFILE !!!!!!!!!");
 	const { _id: user_id } = req.user;
-
-	// res.render('profile',{
-	// 		profilepicId: '5dac0014c65e486064de203c',
-	// 		occupation: 'Credit Analyst',
-	// 		_id: '5da1bf41dd67a863836eaad7',
-	// 		_userId: '5da1be88c2fab26cb73f3381',
-	// 		__v: 0,
-	// 		commaddress: 'Nupur Bishnu Sood\r\n98, Chinchwad, Darjeeling - 226068',
-	// 		fathername: 'Bishnu Sood',
-	// 		flatnum: '98',
-	// 		mothername: 'Nupur Sood',
-	// 		name: 'Nupur Bishnu Sood',
-	// 		permaddress: 'Nupur Bishnu Sood\r\n98, Chinchwad, Darjeeling - 226068'
-	// 	})
 	
   UserDetails.findOne({_userId: user_id}).then((details) => {
 	if(!details) {
@@ -60,7 +46,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next)
 	User.findOne({_id : user_id}).then((det)=>{
 		const role = det.role;
 		if(role === "1"){
-			res.status(200).render('president');
+			res.status(200).redirect('/users/president');
 		}
 		else if(role === "2"){
 			res.status(200).render('secretary');
@@ -74,7 +60,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res, next)
 		else{
 			const { _id: user_id } = det
 			UserDetails.findOne({_userId: user_id}).then(details => {
-				// console.log(details)
+				console.log(details)
 				res.status(200).render('profile',{...details.toJSON()});
 			})
 		}
@@ -96,6 +82,7 @@ router.get('/edit', passport.authenticate('jwt', {session: false}), (req, res, n
 		}
 		UserDetails.findOne({_userId: user_id}).then((details) => {
 			if(!details) {
+				console.log(details)
 				// res.status(401).json({message: 'Unauthorized access'})
 				res.render('profile_update')
 			}else {
@@ -108,21 +95,13 @@ router.get('/edit', passport.authenticate('jwt', {session: false}), (req, res, n
 
 router.get('/edit/:id', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 	const name = req.params.id;
-	//user = {name: }
-	/*User.findOne({_id: user_id}).then((user) => {
-		if(!user) {
-			res.render('profile_update')
-		}
-		*/
 		UserDetails.findOne({ name: name}).then((details) => {
 			if(!details) {
-				// res.status(401).json({message: 'Unauthorized access'})
 				res.render('profile_update')
 			}else {
 				res.render('profile_update', {...details.toJSON()})
 			}
 		}).catch(next);
-	//})
 })
 
 
@@ -151,19 +130,31 @@ router.post('/update', passport.authenticate('jwt', {session: false}), (req, res
       {errors, ...req.body}
     );
   }else {
-		let userDet = new Object({ _userId: ObjectId(user_id), flatnum, name, fathername, mothername, occupation, commaddress, permaddress });
+		let userDet = { _userId: ObjectId(user_id), flatnum, name, fathername, mothername, occupation, commaddress, permaddress };
 
-		UserDetails.findOneAndUpdate({ _userId: user_id }, userDet, {new: true, upsert: true}).then((newDetails) => {
-			// console.log(newDetails);
-			User.findOneAndUpdate({_id: user_id}, {detailsGiven: true, firstTimeLogin: false}).then((updatedUser) => {
-				// req.flash('success_msg', 'profile is updated')
-				// req.flash('user_id', user_id);
-				res.status(200).json({message: 'profile update is successful'});
-			}).catch(next);
-		}).catch(next);
+		UserDetails.find({_userId: user_id}).then((user) => {
+			if(!user) {
+				let newUser = new UserDetails(userDet)
+				newUser.save().then((savedUser) => {
+					res.status(200).json({message: 'profile update is successful'});
+				}).catch(next)
+			}else {
+				UserDetails.findOneAndUpdate({ _userId: user_id }, userDet, {new: true, upsert: true}).then((newDetails) => {
+					// console.log(newDetails);
+					User.findOneAndUpdate({_id: user_id}, {detailsGiven: true, firstTimeLogin: false}).then((updatedUser) => {
+						// req.flash('success_msg', 'profile is updated')
+						// req.flash('user_id', user_id);
+						res.status(200).json({message: 'profile update is successful'});
+					}).catch(next);
+				}).catch(next);
+			}
+		})
+
   }
   
 });
+
+router.use('/create-complaint', require('./complaints.js'))
 
 //TODO: Upload, upate, delete profile pics...
 let gfs;
@@ -247,6 +238,22 @@ function deletePrevProof(req, res, next) {
 	next();
 }
 
+function deletePrevSaleProof(req, res, next) {
+	const { _id:user_id } = req.user
+	UserDetails.findOne({_userId: user_id}).then((details) => {
+		// console.log(details)
+		if(details && details !== undefined) {
+			const { saleProofId } = details;
+			if(saleProofId){
+				gfs.remove({ _id: saleProofId, root: 'profilepics'}, (err, store) => {
+					console.log(err);
+				});
+			}
+		}
+	}).catch(next);
+	next();
+}
+
 router.post('/address-proof-upload', passport.authenticate('jwt', {session: false}), deletePrevProof, (req, res, next) => {
 	// console.log("HELL YEAH UPLOAD");
 	const { _id: user_id } = req.user;
@@ -260,6 +267,26 @@ router.post('/address-proof-upload', passport.authenticate('jwt', {session: fals
 		UserDetails.findOneAndUpdate(
 				{ _userId: ObjectId(user_id) },
 				{ addressProofId: ObjectId(fileData.id) },
+				{ new:true, upsert: true }
+			).then(newDetails => {
+				res.redirect(`/users/profile/edit`)
+		}).catch(next);
+	})
+});
+
+router.post('/sale-proof-upload', passport.authenticate('jwt', {session: false}), deletePrevSaleProof, (req, res, next) => {
+	// console.log("HELL YEAH UPLOAD");
+	const { _id: user_id } = req.user;
+	upload.single('saleproof')(req, res, function(err, file){
+		if(err) console.log(err)
+		let fileData;
+		if(file) fileData = file
+		else {
+			fileData = req.file
+		}
+		UserDetails.findOneAndUpdate(
+				{ _userId: ObjectId(user_id) },
+				{ saleProofId: ObjectId(fileData.id) },
 				{ new:true, upsert: true }
 			).then(newDetails => {
 				res.redirect(`/users/profile/edit`)
@@ -299,6 +326,28 @@ router.get('/addressproof', passport.authenticate('jwt', {session: false, parseR
 		}
 		const { addressProofId } = userData
 		gfs.files.findOne({ _id: addressProofId }, (err, file) => {
+			if (err) next(err);
+			if(!file) {
+				res.sendFile('/img/palceholder.png', {root: 'static'})
+			}
+			else {
+				const readStream = gfs.createReadStream(file.filename);
+				readStream.pipe(res);
+			}
+		});
+	}).catch(next)
+});
+
+router.get('/saleproof', passport.authenticate('jwt', {session: false, parseReqBody: false}), (req, res, next) => {
+	// console.log("HELL YEAH PROFILE PIC");
+	const { _id: user_id } = req.user;
+	UserDetails.findOne({_userId: user_id}).then(userData => {
+		// console.log(userData);
+		if(!userData) {
+			res.sendFile('/img/palceholder.png', {root: 'static'})
+		}
+		const { saleProofId } = userData
+		gfs.files.findOne({ _id: saleProofId }, (err, file) => {
 			if (err) next(err);
 			if(!file) {
 				res.sendFile('/img/palceholder.png', {root: 'static'})
@@ -351,6 +400,26 @@ router.get('/addressproof/:user_id', passport.authenticate('jwt', {session: fals
 	})
 });
 
+router.get('/saleproof/:user_id', passport.authenticate('jwt', {session: false, parseReqBody: false}), (req, res, next) => {
+	const { user_id } = req.params;
+	UserDetails.findOne({_userId: ObjectId(user_id)}).then(userData => {
+		if(!userData) {
+			res.sendFile('/img/palceholder.png', {root: 'static'})
+		}
+		const { saleProofId } = userData
+		gfs.files.findOne({ _id: ObjectId(saleProofId) }, (err, file) => {
+			if (err) next(err);
+			if(!file) {
+				res.sendFile('/img/palceholder.png', {root: 'static'})
+			}
+			else {
+				const readStream = gfs.createReadStream(file.filename);
+				readStream.pipe(res);
+			}
+		});
+	})
+});
+
 
 router.get('/viewowners',passport.authenticate('jwt', {session: false, parseReqBody: false}) ,(req, res,next) => {
 		
@@ -367,7 +436,6 @@ router.get('/viewowners',passport.authenticate('jwt', {session: false, parseReqB
 			})
 
 			Promise.all(flat_owners).then((details) => {
-				console.log(details)
 				let flat_owners_details = details.reduce((acc, cur) => {
 					if(cur){
 						const {name, flatnum, _userId} = cur;
@@ -444,13 +512,11 @@ router.post(
     } = req.body;
     const doc = {};
     const {profilename, id} = req.query;
-    console.log(id);
     console.log("/viewowners/update/:updateid/ok");
     UserDetails.findOne({ _userId: id }).then(details => {
       if (!details) {
         res.status(400).json({ msg: " User Not found" });
       } else {
-        console.log(details);
 
         const { _id: user_id } = details._userId;
 
@@ -606,7 +672,7 @@ router.post(
 		Complaints.findOne({ against : comagainst})
 		.then( profile =>{
 			console.log("Found complaint"+profile.approved)
-			if(profile.approved === "Not Approved" ){
+			if(profile.approved === "Not Approved" || profile.approved === "Not approved" ){
 				Complaints.findOneAndUpdate({ against : comagainst},{ $set :{approved : "Approved"}},{new : true})
 				.then( pro =>{
 					console.log(pro)

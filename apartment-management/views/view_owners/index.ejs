@@ -1,0 +1,14 @@
+
+<div class="president-profile my-5">
+	<% include ../partials/president_menu %>
+	<div class="flat-owners-details">
+		<%# JSON.stringify(owners) %>
+		<% if(owners.length) { %>
+			<% owners.forEach(function (owner){ %>
+				<%- include('./owner_profile.ejs', owner); %>
+		<% }) %>
+		<% } else { %>
+			<h4>No one to approve yet</h4>
+		<% } %> 
+	</div>
+</div>

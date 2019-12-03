@@ -1,0 +1,25 @@
+<div class="container">
+	<% include ../../views/partials/messages %>
+	<form action="/users/profile/create-complaint" method="POST">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Complaint Against</label>
+						<input type="text" name="against" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" style="margin: auto;display: block;">
+					</div>
+					<div class="form-group">
+						<label for="complaint-text">Complaint:</label>
+						<textarea
+							name="cause"
+							id="complaint-text"
+							class="form-control"
+							placeholder="complaint-text"
+							cols="30"
+							rows="5"
+						><%=typeof cause !== 'undefined' ? cause : '' %></textarea>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="exampleCheck1">
+						<label class="form-check-label" for="exampleCheck1">Check me out</label>
+					</div>
+					<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+	</div>
