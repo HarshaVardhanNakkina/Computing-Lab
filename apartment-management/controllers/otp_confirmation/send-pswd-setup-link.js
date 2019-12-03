@@ -10,9 +10,9 @@ async function sendPswdSetupLink(user, data) {
 	console.log('sending password setup link');
 	console.log(link);
 	//! just for testing
-	if(token) {
-		return Promise.resolve();
-	}
+	// if(token) {
+	// 	return Promise.resolve();
+	// }
 	// const request =
 	return mailjet.post('send', { version: 'v3.1' }).request({
 		Messages: [
