@@ -3,7 +3,7 @@
     <% owners.forEach(function(flat_owner){  %>
         <%# JSON.stringify(flat_owner) %>
         <li class="list-group-item"><%= flat_owner.name %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="button" id="Viewowner"  onClick="location.href ='http://localhost:5050/users/profile/viewowners/view/'+'<%=flat_owner.name %>' " value="View Details"></input>&nbsp;&nbsp;&nbsp;
+            
 
             <input type="button" id="Updateowner"  onClick="location.href='http://localhost:5050/users/profile/viewowners/update/?id=<%=flat_owner._userId %>&name=<%= flat_owner.name %>'" value="Update Details"></input>&nbsp;&nbsp;&nbsp;
             <input type="button" id="Deleteowner"  onClick="location.href ='http://localhost:5050/users/profile/viewowners/Delete/'+'<%=flat_owner.name %>' " value="Delete Details"></input>
